@@ -20,7 +20,9 @@ class SplashView extends HookWidget {
     final token = useState<String?>(null);
     useEffect(() {
       Future.microtask(() async {
-        await secureStorage.read(key: AppStrings.jwtToken).then((value) {
+        await secureStorage.read(key: AppLocalStorageKeys.jwtToken.name).then((
+          value,
+        ) {
           token.value = value;
         });
       });
@@ -30,6 +32,7 @@ class SplashView extends HookWidget {
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: Container(
           padding: const EdgeInsets.all(24.0),
           decoration: const BoxDecoration(

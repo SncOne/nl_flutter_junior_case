@@ -29,6 +29,9 @@ dependencies:
   slang_flutter: ^4.8.0
   jwt_decoder: ^2.0.1
   hooks_riverpod: ^2.6.1
+  infinite_scroll_pagination: ^5.1.1
+  image_picker: ^1.2.0
+  connectivity_plus: ^7.0.0
 
 dev_dependencies:
   flutter_test:

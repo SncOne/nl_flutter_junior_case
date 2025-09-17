@@ -3,15 +3,79 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'movie_list_model.freezed.dart';
 part 'movie_list_model.g.dart';
 
+class MovieDataConverter implements JsonConverter<MovieData, dynamic> {
+  const MovieDataConverter();
+
+  @override
+  MovieData fromJson(dynamic json) {
+    if (json == null) {
+      return MovieData(movies: const [], pagination: null);
+    }
+
+    if (json is List) {
+      final movies = json
+          .map<MovieModel>(
+            (e) => MovieModel.fromJson(Map<String, dynamic>.from(e as Map)),
+          )
+          .toList();
+      return MovieData(movies: movies, pagination: null);
+    }
+
+    if (json is Map<String, dynamic>) {
+      return MovieData.fromJson(json);
+    }
+
+    return MovieData(movies: const [], pagination: null);
+  }
+
+  @override
+  dynamic toJson(MovieData object) => object.toJson();
+}
+
 @freezed
 abstract class MovieListModel with _$MovieListModel {
   const factory MovieListModel({
     @JsonKey(name: "response") required Response response,
-    @JsonKey(name: "data") required List<MovieModel> data,
+    @MovieDataConverter() @JsonKey(name: "data") required MovieData movieData,
   }) = _MovieListModel;
 
   factory MovieListModel.fromJson(Map<String, dynamic> json) =>
       _$MovieListModelFromJson(json);
+}
+
+@freezed
+abstract class Response with _$Response {
+  const factory Response({
+    @JsonKey(name: "code") required int code,
+    @JsonKey(name: "message") required String message,
+  }) = _Response;
+
+  factory Response.fromJson(Map<String, dynamic> json) =>
+      _$ResponseFromJson(json);
+}
+
+@freezed
+abstract class MovieData with _$MovieData {
+  const factory MovieData({
+    @JsonKey(name: "movies") required List<MovieModel> movies,
+    @JsonKey(name: "pagination") Pagination? pagination,
+  }) = _MovieData;
+
+  factory MovieData.fromJson(Map<String, dynamic> json) =>
+      _$MovieDataFromJson(json);
+}
+
+@freezed
+abstract class Pagination with _$Pagination {
+  const factory Pagination({
+    @JsonKey(name: "currentPage") required int currentPage,
+    @JsonKey(name: "maxPage") required int lastPage,
+    @JsonKey(name: "perPage") required int perPage,
+    @JsonKey(name: "totalCount") required int total,
+  }) = _Pagination;
+
+  factory Pagination.fromJson(Map<String, dynamic> json) =>
+      _$PaginationFromJson(json);
 }
 
 @freezed
@@ -45,15 +109,4 @@ abstract class MovieModel with _$MovieModel {
 
   factory MovieModel.fromJson(Map<String, dynamic> json) =>
       _$MovieModelFromJson(json);
-}
-
-@freezed
-abstract class Response with _$Response {
-  const factory Response({
-    @JsonKey(name: "code") required int code,
-    @JsonKey(name: "message") required String message,
-  }) = _Response;
-
-  factory Response.fromJson(Map<String, dynamic> json) =>
-      _$ResponseFromJson(json);
 }

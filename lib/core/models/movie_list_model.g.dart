@@ -9,13 +9,54 @@ part of 'movie_list_model.dart';
 _MovieListModel _$MovieListModelFromJson(Map<String, dynamic> json) =>
     _MovieListModel(
       response: Response.fromJson(json['response'] as Map<String, dynamic>),
-      data: (json['data'] as List<dynamic>)
-          .map((e) => MovieModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      movieData: const MovieDataConverter().fromJson(json['data']),
     );
 
 Map<String, dynamic> _$MovieListModelToJson(_MovieListModel instance) =>
-    <String, dynamic>{'response': instance.response, 'data': instance.data};
+    <String, dynamic>{
+      'response': instance.response,
+      'data': const MovieDataConverter().toJson(instance.movieData),
+    };
+
+_Response _$ResponseFromJson(Map<String, dynamic> json) => _Response(
+  code: (json['code'] as num).toInt(),
+  message: json['message'] as String,
+);
+
+Map<String, dynamic> _$ResponseToJson(_Response instance) => <String, dynamic>{
+  'code': instance.code,
+  'message': instance.message,
+};
+
+_MovieData _$MovieDataFromJson(Map<String, dynamic> json) => _MovieData(
+  movies: (json['movies'] as List<dynamic>)
+      .map((e) => MovieModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  pagination: json['pagination'] == null
+      ? null
+      : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+);
+
+Map<String, dynamic> _$MovieDataToJson(_MovieData instance) =>
+    <String, dynamic>{
+      'movies': instance.movies,
+      'pagination': instance.pagination,
+    };
+
+_Pagination _$PaginationFromJson(Map<String, dynamic> json) => _Pagination(
+  currentPage: (json['currentPage'] as num).toInt(),
+  lastPage: (json['maxPage'] as num).toInt(),
+  perPage: (json['perPage'] as num).toInt(),
+  total: (json['totalCount'] as num).toInt(),
+);
+
+Map<String, dynamic> _$PaginationToJson(_Pagination instance) =>
+    <String, dynamic>{
+      'currentPage': instance.currentPage,
+      'maxPage': instance.lastPage,
+      'perPage': instance.perPage,
+      'totalCount': instance.total,
+    };
 
 _MovieModel _$MovieModelFromJson(Map<String, dynamic> json) => _MovieModel(
   id: json['id'] as String,
@@ -71,13 +112,3 @@ Map<String, dynamic> _$MovieModelToJson(_MovieModel instance) =>
       'ComingSoon': instance.comingSoon,
       'isFavorite': instance.isFavorite,
     };
-
-_Response _$ResponseFromJson(Map<String, dynamic> json) => _Response(
-  code: (json['code'] as num).toInt(),
-  message: json['message'] as String,
-);
-
-Map<String, dynamic> _$ResponseToJson(_Response instance) => <String, dynamic>{
-  'code': instance.code,
-  'message': instance.message,
-};

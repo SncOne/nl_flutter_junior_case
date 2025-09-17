@@ -24,6 +24,10 @@ class AppButton extends StatelessWidget {
   final bool isDisabled;
   final bool isLoading;
 
+  // Circular option
+  final bool isCircular;
+  final double circularSize;
+
   const AppButton({
     super.key,
     this.label,
@@ -42,25 +46,34 @@ class AppButton extends StatelessWidget {
     this.iconColor,
     this.isDisabled = false,
     this.isLoading = false,
+    this.isCircular = false,
+    this.circularSize = 48,
   });
 
   @override
   Widget build(BuildContext context) {
     final effectiveOnPressed = (isDisabled || isLoading) ? null : onPressed;
 
+    final buttonPadding = isCircular ? EdgeInsets.zero : padding;
+
     return ElevatedButton(
       onPressed: effectiveOnPressed,
       style: ElevatedButton.styleFrom(
-        padding: padding,
+        padding: buttonPadding,
         side: BorderSide(color: borderColor),
-        backgroundColor: isDisabled
-            ? disabledColor
-            : (isFilled ? backgroundColor : Colors.transparent),
+        disabledBackgroundColor: disabledColor,
+        disabledForegroundColor: textColor.withValues(alpha: 0.5),
+
+        backgroundColor: isFilled ? backgroundColor : Colors.transparent,
         foregroundColor: textColor,
         elevation: elevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
+
+        shape: isCircular
+            ? CircleBorder(side: BorderSide(color: borderColor))
+            : RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+        fixedSize: isCircular ? Size(circularSize, circularSize) : null,
       ),
       child: isLoading
           ? SizedBox(

@@ -49,6 +49,7 @@ class TranslationsTr implements Translations {
 	@override String get name => 'İsim';
 	@override String get surname => 'Soyisim';
 	@override late final _TranslationsTermsAndConditionsTr termsAndConditions = _TranslationsTermsAndConditionsTr._(_root);
+	@override late final _TranslationsTermsTr terms = _TranslationsTermsTr._(_root);
 	@override String get haveAccount => 'Hesabın var mı?';
 	@override String get profile_detail => 'Profil Detayı';
 	@override String get upload_photo => 'Fotoğraf Yükle';
@@ -57,6 +58,8 @@ class TranslationsTr implements Translations {
 	@override String get skip => 'Atla';
 	@override String get home => 'Ana Sayfa';
 	@override String get profile => 'Profil';
+	@override String failed_to_fetch({required Object error}) => 'Veri alınamadı: ${error}';
+	@override String something_went_wrong({required Object error}) => 'Bir şeyler ters gitti: ${error}';
 	@override String get add_photo => 'Fotoğraf Ekle';
 	@override String get limited_offer => 'Sınırlı Teklif';
 	@override String get limited_offer_subtitle => 'Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!';
@@ -67,7 +70,14 @@ class TranslationsTr implements Translations {
 	@override String get more_likes => 'Daha Fazla Beğeni';
 	@override String get unlock_features_title => 'Kilidi açmak için bir jeton paketi seçin';
 	@override String get weekly => 'Başına Haftalık';
+	@override String get token => 'Jeton';
 	@override String get see_all_token_plans => 'Tüm Jetonları Gör';
+	@override String get logout => 'Çıkış Yap';
+	@override String get settings => 'Ayarlar';
+	@override String get select_language => 'Dil Seç';
+	@override String version({required Object value}) => 'Sürüm: ${value}';
+	@override String get no_internet_connection => 'İnternet Bağlantısı Yok';
+	@override late final _TranslationsValidationTr validation = _TranslationsValidationTr._(_root);
 }
 
 // Path: termsAndConditions
@@ -80,6 +90,39 @@ class _TranslationsTermsAndConditionsTr implements TranslationsTermsAndCondition
 	@override String get prefix => 'Kullanıcı sözleşmesini ';
 	@override String get action => 'Okudum ve Kabul ediyorum.';
 	@override String get suffix => 'Lütfen kayıt olmadan önce kullanıcı sözleşmesini okuyunuz.';
+}
+
+// Path: terms
+class _TranslationsTermsTr implements TranslationsTermsEn {
+	_TranslationsTermsTr._(this._root);
+
+	final TranslationsTr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Hoşgeldiniz';
+	@override String get intro => 'Bu örnek kullanım şartları metnidir. Uygulamayı kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız.';
+	@override String get item1 => '1. Hizmetin kullanımı: Uygulama içeriği bilgilendirme amaçlıdır ve değiştirilebilir. Kullanıcılar içerikleri sorumlulukları dahilinde kullanmalıdır.';
+	@override String get item2 => '2. Sorumluluk reddi: Uygulama sağlayıcısı, uygulamanın sürekli erişilebilir olacağını veya içeriklerin hatasız olacağını garanti etmez.';
+	@override String get item3 => '3. Gizlilik: Kullanıcıların kişisel verileri gizlilik politikasına uygun şekilde işlenir. (Bu örnek projede gerçek veri işleme olmayabilir.)';
+	@override String get note => 'Bu metin örnektir. Gerçek bir proje için yasal metinleri hukuk danışmanınızla hazırlayın veya yerel düzenlemelere uygun olarak güncelleyin.';
+	@override String get accept => 'Kabul Ediyorum';
+}
+
+// Path: validation
+class _TranslationsValidationTr implements TranslationsValidationEn {
+	_TranslationsValidationTr._(this._root);
+
+	final TranslationsTr _root; // ignore: unused_field
+
+	// Translations
+	@override String get email_required => 'E-posta gerekli';
+	@override String get invalid_email => 'Geçersiz e-posta formatı';
+	@override String get name_required => 'İsim gerekli';
+	@override String get name_min_length => 'İsim en az 3 karakter olmalıdır';
+	@override String get password_required => 'Şifre gerekli';
+	@override String get password_min_length => 'Şifre en az 6 karakter olmalıdır';
+	@override String get confirm_password_required => 'Şifre Tekrar gerekli';
+	@override String get passwords_do_not_match => 'Şifreler uyuşmuyor';
 }
 
 /// Flat map(s) containing all translations.
@@ -102,6 +145,13 @@ extension on TranslationsTr {
 			case 'termsAndConditions.prefix': return 'Kullanıcı sözleşmesini ';
 			case 'termsAndConditions.action': return 'Okudum ve Kabul ediyorum.';
 			case 'termsAndConditions.suffix': return 'Lütfen kayıt olmadan önce kullanıcı sözleşmesini okuyunuz.';
+			case 'terms.title': return 'Hoşgeldiniz';
+			case 'terms.intro': return 'Bu örnek kullanım şartları metnidir. Uygulamayı kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız.';
+			case 'terms.item1': return '1. Hizmetin kullanımı: Uygulama içeriği bilgilendirme amaçlıdır ve değiştirilebilir. Kullanıcılar içerikleri sorumlulukları dahilinde kullanmalıdır.';
+			case 'terms.item2': return '2. Sorumluluk reddi: Uygulama sağlayıcısı, uygulamanın sürekli erişilebilir olacağını veya içeriklerin hatasız olacağını garanti etmez.';
+			case 'terms.item3': return '3. Gizlilik: Kullanıcıların kişisel verileri gizlilik politikasına uygun şekilde işlenir. (Bu örnek projede gerçek veri işleme olmayabilir.)';
+			case 'terms.note': return 'Bu metin örnektir. Gerçek bir proje için yasal metinleri hukuk danışmanınızla hazırlayın veya yerel düzenlemelere uygun olarak güncelleyin.';
+			case 'terms.accept': return 'Kabul Ediyorum';
 			case 'haveAccount': return 'Hesabın var mı?';
 			case 'profile_detail': return 'Profil Detayı';
 			case 'upload_photo': return 'Fotoğraf Yükle';
@@ -110,6 +160,8 @@ extension on TranslationsTr {
 			case 'skip': return 'Atla';
 			case 'home': return 'Ana Sayfa';
 			case 'profile': return 'Profil';
+			case 'failed_to_fetch': return ({required Object error}) => 'Veri alınamadı: ${error}';
+			case 'something_went_wrong': return ({required Object error}) => 'Bir şeyler ters gitti: ${error}';
 			case 'add_photo': return 'Fotoğraf Ekle';
 			case 'limited_offer': return 'Sınırlı Teklif';
 			case 'limited_offer_subtitle': return 'Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!';
@@ -120,7 +172,21 @@ extension on TranslationsTr {
 			case 'more_likes': return 'Daha Fazla Beğeni';
 			case 'unlock_features_title': return 'Kilidi açmak için bir jeton paketi seçin';
 			case 'weekly': return 'Başına Haftalık';
+			case 'token': return 'Jeton';
 			case 'see_all_token_plans': return 'Tüm Jetonları Gör';
+			case 'logout': return 'Çıkış Yap';
+			case 'settings': return 'Ayarlar';
+			case 'select_language': return 'Dil Seç';
+			case 'version': return ({required Object value}) => 'Sürüm: ${value}';
+			case 'no_internet_connection': return 'İnternet Bağlantısı Yok';
+			case 'validation.email_required': return 'E-posta gerekli';
+			case 'validation.invalid_email': return 'Geçersiz e-posta formatı';
+			case 'validation.name_required': return 'İsim gerekli';
+			case 'validation.name_min_length': return 'İsim en az 3 karakter olmalıdır';
+			case 'validation.password_required': return 'Şifre gerekli';
+			case 'validation.password_min_length': return 'Şifre en az 6 karakter olmalıdır';
+			case 'validation.confirm_password_required': return 'Şifre Tekrar gerekli';
+			case 'validation.passwords_do_not_match': return 'Şifreler uyuşmuyor';
 			default: return null;
 		}
 	}

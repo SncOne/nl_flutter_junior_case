@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jr_case_boilerplate/core/constants/app_strings.dart';
 import 'package:jr_case_boilerplate/core/enums/app/app_local_storage_keys.dart';
 import 'package:jr_case_boilerplate/core/helpers/print.dart';
 import 'package:jr_case_boilerplate/core/routes/app_router.dart';
@@ -92,7 +91,9 @@ class DioService {
     _dio.interceptors.addAll([
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          String? token = await secureStorage.read(key: AppStrings.jwtToken);
+          String? token = await secureStorage.read(
+            key: AppLocalStorageKeys.jwtToken.name,
+          );
           if (token != null && token.isNotEmpty) {
             if (JwtDecoder.isExpired(token)) {
               Print.error('JWT süresi doldu ve yenilenemedi');
@@ -109,6 +110,8 @@ class DioService {
 
           options.headers['Authorization'] = 'Bearer $token';
           Print.info('Token: $token');
+          Print.info('options.headers: ${options.headers}');
+          Print.info('options.headers: ${options.method} ${options.path}');
           return handler.next(options);
         },
         onResponse: (response, handler) {

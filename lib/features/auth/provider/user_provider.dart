@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:jr_case_boilerplate/core/enums/app/app_local_storage_keys.dart';
 import 'package:jr_case_boilerplate/core/helpers/print.dart';
 import 'package:jr_case_boilerplate/core/services/dio_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,10 +20,10 @@ class User extends _$User {
     required String email,
     required String password,
   }) async {
-    final dio = ref.read(dioService).dio;
+    final dio = ref.read(dioService);
 
     try {
-      final response = await dio.post(
+      final response = await dio.postRaw(
         '/user/login',
         data: {"email": email, "password": password},
       );
@@ -39,10 +40,10 @@ class User extends _$User {
     required String email,
     required String password,
   }) async {
-    final dio = ref.read(dioService).dio;
+    final dio = ref.read(dioService);
 
     try {
-      final response = await dio.post(
+      final response = await dio.postRaw(
         '/user/register',
         data: {"name": name, "email": email, "password": password},
       );
@@ -53,32 +54,18 @@ class User extends _$User {
     }
   }
 
-  /// Profile
-  Future<Map<String, dynamic>> getProfile() async {
-    final dio = ref.read(dioService).dio;
-
-    try {
-      final response = await dio.get('/user/profile');
-      return response.data;
-    } on DioException catch (e) {
-      Print.error("Profile error: ${e.response?.data}");
-      rethrow;
-    }
-  }
-
   /// Upload Photo
   Future<Map<String, dynamic>> uploadPhoto(File file) async {
-    final dio = ref.read(dioService).dio;
+    final dio = ref.read(dioService);
 
     try {
       final formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path),
       });
 
-      final response = await dio.post(
+      final response = await dio.postForm(
         '/user/upload_photo',
-        data: formData,
-        options: Options(contentType: "multipart/form-data"),
+        formData: formData,
       );
 
       return response.data;
@@ -86,5 +73,10 @@ class User extends _$User {
       Print.error("Upload photo error: ${e.response?.data}");
       rethrow;
     }
+  }
+
+  /// Logout
+  Future<void> logout() async {
+    await secureStorage.delete(key: AppLocalStorageKeys.jwtToken.name);
   }
 }

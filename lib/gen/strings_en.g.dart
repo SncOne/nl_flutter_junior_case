@@ -77,6 +77,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	String get surname => 'Last Name';
 
 	late final TranslationsTermsAndConditionsEn termsAndConditions = TranslationsTermsAndConditionsEn._(_root);
+	late final TranslationsTermsEn terms = TranslationsTermsEn._(_root);
 
 	/// en: 'Already have an account?'
 	String get haveAccount => 'Already have an account?';
@@ -101,6 +102,12 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	/// en: 'Profile'
 	String get profile => 'Profile';
+
+	/// en: 'Failed to fetch data: ${error}'
+	String failed_to_fetch({required Object error}) => 'Failed to fetch data: ${error}';
+
+	/// en: 'Something went wrong: ${error}'
+	String something_went_wrong({required Object error}) => 'Something went wrong: ${error}';
 
 	/// en: 'Add Photo'
 	String get add_photo => 'Add Photo';
@@ -129,11 +136,31 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	/// en: 'Choose a token pack to unlock features'
 	String get unlock_features_title => 'Choose a token pack to unlock features';
 
+	/// en: 'Token'
+	String get token => 'Token';
+
 	/// en: 'Weekly'
 	String get weekly => 'Weekly';
 
 	/// en: 'See All Token Plans'
 	String get see_all_token_plans => 'See All Token Plans';
+
+	/// en: 'Logout'
+	String get logout => 'Logout';
+
+	/// en: 'Settings'
+	String get settings => 'Settings';
+
+	/// en: 'Select Language'
+	String get select_language => 'Select Language';
+
+	/// en: 'Version: ${value}'
+	String version({required Object value}) => 'Version: ${value}';
+
+	/// en: 'No Internet Connection'
+	String get no_internet_connection => 'No Internet Connection';
+
+	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
 }
 
 // Path: termsAndConditions
@@ -152,6 +179,69 @@ class TranslationsTermsAndConditionsEn {
 
 	/// en: 'Please read the Terms and Conditions before signing up.'
 	String get suffix => 'Please read the Terms and Conditions before signing up.';
+}
+
+// Path: terms
+class TranslationsTermsEn {
+	TranslationsTermsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Welcome'
+	String get title => 'Welcome';
+
+	/// en: 'This is a sample terms of use text. By using the app you agree to the following conditions.'
+	String get intro => 'This is a sample terms of use text. By using the app you agree to the following conditions.';
+
+	/// en: '1. Use of service: App content is for informational purposes and may change. Users must use content under their responsibility.'
+	String get item1 => '1. Use of service: App content is for informational purposes and may change. Users must use content under their responsibility.';
+
+	/// en: '2. Disclaimer: The app provider does not guarantee continuous availability or error-free content.'
+	String get item2 => '2. Disclaimer: The app provider does not guarantee continuous availability or error-free content.';
+
+	/// en: '3. Privacy: Users' personal data will be processed according to the privacy policy. (This sample project may not process real data.)'
+	String get item3 => '3. Privacy: Users\' personal data will be processed according to the privacy policy. (This sample project may not process real data.)';
+
+	/// en: 'This text is a sample. For a real project prepare legal texts with your legal counsel or update them to comply with local regulations.'
+	String get note => 'This text is a sample. For a real project prepare legal texts with your legal counsel or update them to comply with local regulations.';
+
+	/// en: 'I Accept'
+	String get accept => 'I Accept';
+}
+
+// Path: validation
+class TranslationsValidationEn {
+	TranslationsValidationEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Email is required'
+	String get email_required => 'Email is required';
+
+	/// en: 'Invalid email format'
+	String get invalid_email => 'Invalid email format';
+
+	/// en: 'Name is required'
+	String get name_required => 'Name is required';
+
+	/// en: 'Name must be at least 3 characters long'
+	String get name_min_length => 'Name must be at least 3 characters long';
+
+	/// en: 'Password is required'
+	String get password_required => 'Password is required';
+
+	/// en: 'Password must be at least 6 characters long'
+	String get password_min_length => 'Password must be at least 6 characters long';
+
+	/// en: 'Confirm Password is required'
+	String get confirm_password_required => 'Confirm Password is required';
+
+	/// en: 'Passwords do not match'
+	String get passwords_do_not_match => 'Passwords do not match';
 }
 
 /// Flat map(s) containing all translations.
@@ -174,6 +264,13 @@ extension on Translations {
 			case 'termsAndConditions.prefix': return 'Terms and Conditions ';
 			case 'termsAndConditions.action': return 'I have Read and Agree.';
 			case 'termsAndConditions.suffix': return 'Please read the Terms and Conditions before signing up.';
+			case 'terms.title': return 'Welcome';
+			case 'terms.intro': return 'This is a sample terms of use text. By using the app you agree to the following conditions.';
+			case 'terms.item1': return '1. Use of service: App content is for informational purposes and may change. Users must use content under their responsibility.';
+			case 'terms.item2': return '2. Disclaimer: The app provider does not guarantee continuous availability or error-free content.';
+			case 'terms.item3': return '3. Privacy: Users\' personal data will be processed according to the privacy policy. (This sample project may not process real data.)';
+			case 'terms.note': return 'This text is a sample. For a real project prepare legal texts with your legal counsel or update them to comply with local regulations.';
+			case 'terms.accept': return 'I Accept';
 			case 'haveAccount': return 'Already have an account?';
 			case 'profile_detail': return 'Profile Details';
 			case 'upload_photo': return 'Upload Photo';
@@ -182,6 +279,8 @@ extension on Translations {
 			case 'skip': return 'Skip';
 			case 'home': return 'Home';
 			case 'profile': return 'Profile';
+			case 'failed_to_fetch': return ({required Object error}) => 'Failed to fetch data: ${error}';
+			case 'something_went_wrong': return ({required Object error}) => 'Something went wrong: ${error}';
 			case 'add_photo': return 'Add Photo';
 			case 'limited_offer': return 'Limited Offer';
 			case 'limited_offer_subtitle': return 'Select a token pack to earn bonuses and unlock new sections!';
@@ -191,8 +290,22 @@ extension on Translations {
 			case 'featured': return 'Featured';
 			case 'more_likes': return 'More Likes';
 			case 'unlock_features_title': return 'Choose a token pack to unlock features';
+			case 'token': return 'Token';
 			case 'weekly': return 'Weekly';
 			case 'see_all_token_plans': return 'See All Token Plans';
+			case 'logout': return 'Logout';
+			case 'settings': return 'Settings';
+			case 'select_language': return 'Select Language';
+			case 'version': return ({required Object value}) => 'Version: ${value}';
+			case 'no_internet_connection': return 'No Internet Connection';
+			case 'validation.email_required': return 'Email is required';
+			case 'validation.invalid_email': return 'Invalid email format';
+			case 'validation.name_required': return 'Name is required';
+			case 'validation.name_min_length': return 'Name must be at least 3 characters long';
+			case 'validation.password_required': return 'Password is required';
+			case 'validation.password_min_length': return 'Password must be at least 6 characters long';
+			case 'validation.confirm_password_required': return 'Confirm Password is required';
+			case 'validation.passwords_do_not_match': return 'Passwords do not match';
 			default: return null;
 		}
 	}

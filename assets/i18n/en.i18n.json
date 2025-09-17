@@ -16,6 +16,15 @@
     "action": "I have Read and Agree.",
     "suffix": "Please read the Terms and Conditions before signing up."
   },
+  "terms": {
+    "title": "Welcome",
+    "intro": "This is a sample terms of use text. By using the app you agree to the following conditions.",
+    "item1": "1. Use of service: App content is for informational purposes and may change. Users must use content under their responsibility.",
+    "item2": "2. Disclaimer: The app provider does not guarantee continuous availability or error-free content.",
+    "item3": "3. Privacy: Users' personal data will be processed according to the privacy policy. (This sample project may not process real data.)",
+    "note": "This text is a sample. For a real project prepare legal texts with your legal counsel or update them to comply with local regulations.",
+    "accept": "I Accept"
+  },
   "haveAccount": "Already have an account?",
   "profile_detail": "Profile Details",
   "upload_photo": "Upload Photo",
@@ -24,6 +33,8 @@
   "skip": "Skip",
   "home": "Home",
   "profile": "Profile",
+  "failed_to_fetch": "Failed to fetch data: ${error}",
+  "something_went_wrong": "Something went wrong: ${error}",
   "add_photo": "Add Photo",
   "limited_offer": "Limited Offer",
   "limited_offer_subtitle": "Select a token pack to earn bonuses and unlock new sections!",
@@ -33,6 +44,22 @@
   "featured": "Featured",
   "more_likes": "More Likes",
   "unlock_features_title": "Choose a token pack to unlock features",
+  "token": "Token",
   "weekly": "Weekly",
-  "see_all_token_plans": "See All Token Plans"
+  "see_all_token_plans": "See All Token Plans",
+  "logout": "Logout",
+  "settings": "Settings",
+  "select_language": "Select Language",
+  "version": "Version: ${value}",
+  "no_internet_connection": "No Internet Connection",
+  "validation": {
+    "email_required": "Email is required",
+    "invalid_email": "Invalid email format",
+    "name_required": "Name is required",
+    "name_min_length": "Name must be at least 3 characters long",
+    "password_required": "Password is required",
+    "password_min_length": "Password must be at least 6 characters long",
+    "confirm_password_required": "Confirm Password is required",
+    "passwords_do_not_match": "Passwords do not match"
+  }
 }

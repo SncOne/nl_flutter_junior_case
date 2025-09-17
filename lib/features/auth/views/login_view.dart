@@ -4,15 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jr_case_boilerplate/core/constants/app_colors.dart';
-import 'package:jr_case_boilerplate/core/constants/app_strings.dart';
 import 'package:jr_case_boilerplate/core/constants/app_text_styles.dart';
 import 'package:jr_case_boilerplate/core/enums/app/app_local_storage_keys.dart';
 import 'package:jr_case_boilerplate/core/enums/assets/app_anims.dart';
 import 'package:jr_case_boilerplate/core/enums/assets/app_icons.dart';
 import 'package:jr_case_boilerplate/core/enums/assets/app_images.dart';
 import 'package:jr_case_boilerplate/core/helpers/print.dart';
+import 'package:jr_case_boilerplate/core/mixins/validators_mixin.dart';
 import 'package:jr_case_boilerplate/core/routes/app_routes.dart';
 import 'package:jr_case_boilerplate/core/widgets/buttons/custom_primary_button.dart';
+import 'package:jr_case_boilerplate/core/widgets/overlay/custom_overlay.dart';
 import 'package:jr_case_boilerplate/core/widgets/shine_overlay/shine_overlay.dart';
 import 'package:jr_case_boilerplate/core/widgets/text_form_field/custom_text_form_field.dart';
 import 'package:jr_case_boilerplate/features/auth/provider/user_provider.dart';
@@ -20,7 +21,7 @@ import 'package:jr_case_boilerplate/gen/strings.g.dart';
 import 'package:lottie/lottie.dart';
 
 @RoutePage(name: 'LoginRoute')
-class LoginView extends HookConsumerWidget {
+class LoginView extends HookConsumerWidget with ValidatorsMixin {
   const LoginView({super.key});
 
   @override
@@ -28,10 +29,13 @@ class LoginView extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
+
         body: LayoutBuilder(
           builder: (context, constraints) {
             final isTablet = constraints.maxWidth > 600;
@@ -40,6 +44,12 @@ class LoginView extends HookConsumerWidget {
             return Container(
               width: constraints.maxWidth,
               height: constraints.maxHeight,
+              padding: EdgeInsets.only(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: bottomPadding,
+              ),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -114,15 +124,8 @@ class LoginView extends HookConsumerWidget {
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         prefixIcon: Image.asset(AppIcons.mail),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'E-posta adresi gereklidir';
-                                          }
-                                          if (!value.contains('@')) {
-                                            return 'Geçerli bir e-posta adresi girin';
-                                          }
-                                          return null;
-                                        },
+                                        validator: (value) =>
+                                            validateEmail(value),
                                       ),
                                       CustomTextFormField(
                                         hintText: context.t.password,
@@ -130,22 +133,13 @@ class LoginView extends HookConsumerWidget {
                                         obscureText: true,
                                         showVisibilityToggle: true,
                                         prefixIcon: Image.asset(AppIcons.lock),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Şifre gereklidir';
-                                          }
-                                          if (value.length < 6) {
-                                            return 'Şifre en az 6 karakter olmalıdır';
-                                          }
-                                          return null;
-                                        },
+                                        validator: (value) =>
+                                            validatePassword(value),
                                       ),
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: TextButton(
-                                          onPressed: () {
-                                            // context.router.pushPath(AppRoutes.forgotPassword.path);
-                                          },
+                                          onPressed: () {},
                                           child: Text(
                                             context.t.forgotPassword,
                                             style:
@@ -162,6 +156,7 @@ class LoginView extends HookConsumerWidget {
                                   ),
                                 ],
                               ),
+
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 spacing: 12,
@@ -184,8 +179,18 @@ class LoginView extends HookConsumerWidget {
                                             final token =
                                                 response['data']['token'];
                                             if (token != null) {
+                                              if (context.mounted) {
+                                                CustomOverlay.show(
+                                                  context,
+                                                  message:
+                                                      'Başarıyla giriş yapıldı!',
+                                                  type: OverlayType.success,
+                                                );
+                                              }
                                               secureStorage.write(
-                                                key: AppStrings.jwtToken,
+                                                key: AppLocalStorageKeys
+                                                    .jwtToken
+                                                    .name,
                                                 value: token,
                                               );
                                               if (context.mounted) {
@@ -195,14 +200,10 @@ class LoginView extends HookConsumerWidget {
                                               }
                                             } else {
                                               if (context.mounted) {
-                                                ScaffoldMessenger.of(
+                                                CustomOverlay.show(
                                                   context,
-                                                ).showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Token alınamadı',
-                                                    ),
-                                                  ),
+                                                  message: 'Token alınamadı',
+                                                  type: OverlayType.error,
                                                 );
                                               }
                                             }
@@ -212,14 +213,11 @@ class LoginView extends HookConsumerWidget {
                                               st: st,
                                             );
                                             if (context.mounted) {
-                                              ScaffoldMessenger.of(
+                                              CustomOverlay.show(
                                                 context,
-                                              ).showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
+                                                message:
                                                     'Giriş başarısız: ${e.toString()}',
-                                                  ),
-                                                ),
+                                                type: OverlayType.error,
                                               );
                                             }
                                           }
@@ -238,7 +236,13 @@ class LoginView extends HookConsumerWidget {
                                         padding: const EdgeInsets.all(8),
                                         iconSize: 60,
                                         borderColor: AppColors.white20,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          CustomOverlay.show(
+                                            context,
+                                            message: 'Çok yakında',
+                                            type: OverlayType.info,
+                                          );
+                                        },
                                       ),
                                       AppButton(
                                         leftIcon: AppIcons.google,
@@ -247,7 +251,13 @@ class LoginView extends HookConsumerWidget {
                                         iconSize: 60,
                                         borderRadius: 16,
                                         borderColor: AppColors.white20,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          CustomOverlay.show(
+                                            context,
+                                            message: 'Çok yakında',
+                                            type: OverlayType.info,
+                                          );
+                                        },
                                       ),
                                       AppButton(
                                         leftIcon: AppIcons.apple,
@@ -256,7 +266,13 @@ class LoginView extends HookConsumerWidget {
                                         iconSize: 60,
                                         borderRadius: 16,
                                         borderColor: AppColors.white20,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          CustomOverlay.show(
+                                            context,
+                                            message: 'Çok yakında',
+                                            type: OverlayType.info,
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),

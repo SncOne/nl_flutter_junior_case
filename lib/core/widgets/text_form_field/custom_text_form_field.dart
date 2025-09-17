@@ -58,16 +58,13 @@ class CustomTextFormField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Hook state management
     final isObscured = useState(obscureText);
     final isFocused = useState(false);
     final errorText = useState<String?>(null);
 
-    // FocusNode hook
     final localFocusNode = useFocusNode();
     final activeFocusNode = focusNode ?? localFocusNode;
 
-    // Focus listener hook
     useEffect(() {
       void onFocusChange() {
         isFocused.value = activeFocusNode.hasFocus;

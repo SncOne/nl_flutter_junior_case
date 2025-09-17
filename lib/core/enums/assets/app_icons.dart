@@ -20,4 +20,13 @@ class AppIcons {
   static const String obsecureShow = 'assets/icons/See.png';
   static const String user = 'assets/icons/User.png';
   static const String close = 'assets/icons/X.png';
+  static const String threeDots = 'assets/icons/threedots.png';
+  static const String settings = 'assets/icons/setting.png';
+  static const String logout = 'assets/icons/logout.png';
+
+  //BottomSheet Icons
+  static const String morelike = 'assets/icons/morelike.png';
+  static const String morematch = 'assets/icons/morematch.png';
+  static const String premium = 'assets/icons/premium.png';
+  static const String promote = 'assets/icons/promote.png';
 }

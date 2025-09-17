@@ -4,22 +4,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jr_case_boilerplate/core/constants/app_colors.dart';
-import 'package:jr_case_boilerplate/core/constants/app_strings.dart';
 import 'package:jr_case_boilerplate/core/constants/app_text_styles.dart';
 import 'package:jr_case_boilerplate/core/enums/app/app_local_storage_keys.dart';
 import 'package:jr_case_boilerplate/core/enums/assets/app_icons.dart';
 import 'package:jr_case_boilerplate/core/enums/assets/app_images.dart';
 import 'package:jr_case_boilerplate/core/helpers/print.dart';
+import 'package:jr_case_boilerplate/core/mixins/validators_mixin.dart';
+import 'package:jr_case_boilerplate/core/routes/app_router.gr.dart';
 import 'package:jr_case_boilerplate/core/routes/app_routes.dart';
 import 'package:jr_case_boilerplate/core/widgets/buttons/custom_primary_button.dart';
+import 'package:jr_case_boilerplate/core/widgets/overlay/custom_overlay.dart';
 import 'package:jr_case_boilerplate/core/widgets/shine_overlay/shine_overlay.dart';
 import 'package:jr_case_boilerplate/core/widgets/text_form_field/custom_text_form_field.dart';
 import 'package:jr_case_boilerplate/features/auth/provider/user_provider.dart';
 import 'package:jr_case_boilerplate/features/auth/widgets/auth_rich_text.dart';
+import 'package:jr_case_boilerplate/features/auth/widgets/custom_check_box.dart';
 import 'package:jr_case_boilerplate/gen/strings.g.dart';
 
 @RoutePage(name: 'RegisterRoute')
-class RegisterView extends HookConsumerWidget {
+class RegisterView extends HookConsumerWidget with ValidatorsMixin {
   const RegisterView({super.key});
 
   @override
@@ -29,10 +32,12 @@ class RegisterView extends HookConsumerWidget {
     final passwordController = useTextEditingController();
     final repasswordController = useTextEditingController();
     final nameSurnameController = useTextEditingController();
+    final termsAccepted = useState(false);
 
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: LayoutBuilder(
           builder: (context, constraints) {
             final isTablet = constraints.maxWidth > 600;
@@ -99,7 +104,7 @@ class RegisterView extends HookConsumerWidget {
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      // Normal E-Mail field
+
                                       Column(
                                         spacing: 24,
                                         children: [
@@ -112,16 +117,8 @@ class RegisterView extends HookConsumerWidget {
                                               AppIcons.profile,
                                             ),
 
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'İsim ve soyisim gereklidir';
-                                              }
-                                              if (value.length < 3) {
-                                                return 'İsim ve soyisim en az 3 karakter olmalıdır';
-                                              }
-                                              return null;
-                                            },
+                                            validator: (value) =>
+                                                validateName(value),
                                           ),
 
                                           CustomTextFormField(
@@ -133,16 +130,8 @@ class RegisterView extends HookConsumerWidget {
                                               AppIcons.mail,
                                             ),
 
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'E-posta adresi gereklidir';
-                                              }
-                                              if (!value.contains('@')) {
-                                                return 'Geçerli bir e-posta adresi girin';
-                                              }
-                                              return null;
-                                            },
+                                            validator: (value) =>
+                                                validateEmail(value),
                                           ),
 
                                           CustomTextFormField(
@@ -153,16 +142,8 @@ class RegisterView extends HookConsumerWidget {
                                             prefixIcon: Image.asset(
                                               AppIcons.lock,
                                             ),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Şifre gereklidir';
-                                              }
-                                              if (value.length < 6) {
-                                                return 'Şifre en az 6 karakter olmalıdır';
-                                              }
-                                              return null;
-                                            },
+                                            validator: (value) =>
+                                                validatePassword(value),
                                           ),
 
                                           CustomTextFormField(
@@ -173,20 +154,11 @@ class RegisterView extends HookConsumerWidget {
                                             prefixIcon: Image.asset(
                                               AppIcons.lock,
                                             ),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Şifre gereklidir';
-                                              }
-                                              if (value.length < 6) {
-                                                return 'Şifre en az 6 karakter olmalıdır';
-                                              }
-                                              if (value !=
-                                                  passwordController.text) {
-                                                return 'Şifreler eşleşmiyor';
-                                              }
-                                              return null;
-                                            },
+                                            validator: (value) =>
+                                                validateConfirmPassword(
+                                                  value,
+                                                  passwordController.text,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -194,17 +166,45 @@ class RegisterView extends HookConsumerWidget {
                                   ),
                                 ],
                               ),
-                              AuthRichText(
-                                prefixText: context.t.termsAndConditions.prefix,
-                                actionText: context.t.termsAndConditions.action,
-                                actionOnTap: () {},
-                                suffixText: context.t.termsAndConditions.suffix,
+                              Row(
+                                spacing: 8,
+                                children: [
+                                  CustomCheckbox(
+                                    value: termsAccepted.value,
+                                    onChanged: (value) {
+                                      termsAccepted.value = value;
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: AuthRichText(
+                                      prefixText:
+                                          context.t.termsAndConditions.prefix,
+                                      actionText:
+                                          context.t.termsAndConditions.action,
+                                      actionOnTap: () {
+                                        context.router.pushPath(
+                                          AppRoutes.terms.path,
+                                        );
+                                      },
+                                      suffixText:
+                                          context.t.termsAndConditions.suffix,
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(
                                 width: double.infinity,
                                 child: AppButton(
                                   label: context.t.signUp,
                                   onPressed: () async {
+                                    if (!termsAccepted.value) {
+                                      CustomOverlay.show(
+                                        context,
+                                        message: 'Lütfen şartları kabul edin',
+                                        type: OverlayType.error,
+                                      );
+                                      return;
+                                    }
                                     if (formKey.currentState!.validate()) {
                                       try {
                                         final response = await ref
@@ -217,40 +217,41 @@ class RegisterView extends HookConsumerWidget {
                                         Print.info(response);
                                         final token = response['data']['token'];
                                         if (token != null) {
+                                          if (context.mounted) {
+                                            CustomOverlay.show(
+                                              context,
+                                              message: 'Kayıt başarılı!',
+                                              type: OverlayType.success,
+                                            );
+                                          }
                                           await secureStorage.write(
-                                            key: AppStrings.jwtToken,
+                                            key: AppLocalStorageKeys
+                                                .jwtToken
+                                                .name,
                                             value: token,
                                           );
                                           if (context.mounted) {
-                                            // use pushPath instead of replacePath to avoid scope resolution errors
-                                            context.router.pushPath(
-                                              AppRoutes.main.path,
-                                            );
+                                            context.router.replaceAll([
+                                              UploadPhotoRoute(),
+                                            ]);
                                           }
                                         } else {
                                           if (context.mounted) {
-                                            ScaffoldMessenger.of(
+                                            CustomOverlay.show(
                                               context,
-                                            ).showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Token alınamadı',
-                                                ),
-                                              ),
+                                              message: 'Token alınamadı',
+                                              type: OverlayType.error,
                                             );
                                           }
                                         }
                                       } catch (e, st) {
                                         Print.error('Login failed: $e', st: st);
                                         if (context.mounted) {
-                                          ScaffoldMessenger.of(
+                                          CustomOverlay.show(
                                             context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Giriş başarısız: ${e.toString()}',
-                                              ),
-                                            ),
+                                            message:
+                                                'Kayıt başarısız: ${e.toString()}',
+                                            type: OverlayType.error,
                                           );
                                         }
                                       }
@@ -269,7 +270,13 @@ class RegisterView extends HookConsumerWidget {
                                     padding: const EdgeInsets.all(8),
                                     iconSize: 60,
                                     borderColor: AppColors.white20,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      CustomOverlay.show(
+                                        context,
+                                        message: 'Çok yakında',
+                                        type: OverlayType.info,
+                                      );
+                                    },
                                   ),
                                   AppButton(
                                     leftIcon: AppIcons.google,
@@ -278,7 +285,13 @@ class RegisterView extends HookConsumerWidget {
                                     iconSize: 60,
                                     borderRadius: 16,
                                     borderColor: AppColors.white20,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      CustomOverlay.show(
+                                        context,
+                                        message: 'Çok yakında',
+                                        type: OverlayType.info,
+                                      );
+                                    },
                                   ),
                                   AppButton(
                                     leftIcon: AppIcons.apple,
@@ -287,7 +300,13 @@ class RegisterView extends HookConsumerWidget {
                                     iconSize: 60,
                                     borderRadius: 16,
                                     borderColor: AppColors.white20,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      CustomOverlay.show(
+                                        context,
+                                        message: 'Çok yakında',
+                                        type: OverlayType.info,
+                                      );
+                                    },
                                   ),
                                 ],
                               ),

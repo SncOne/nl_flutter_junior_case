@@ -29,6 +29,8 @@ class CustomNavBar extends HookWidget {
     return AnimatedBuilder(
       animation: animationController,
       builder: (context, child) {
+        final bottomPadding = MediaQuery.of(context).padding.bottom;
+
         final slideValue = Curves.easeOutQuart.transform(
           animationController.value,
         );
@@ -44,9 +46,11 @@ class CustomNavBar extends HookWidget {
             child: Transform.scale(
               scale: 0.95 + (0.05 * scaleValue),
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 20,
+                  bottom: 20 + bottomPadding,
                 ),
                 color: AppColors.transparent,
                 child: Row(

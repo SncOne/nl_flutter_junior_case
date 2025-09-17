@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Uygulama içi fotoğraf seçimi ve yüklemeler için fotoğraf galerisine erişim izni gerekiyor.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Fotoğraf veya video çekme (profil/resim yükleme ve içerik oluşturma) için kameraya erişim izni gerekiyor.</string>
 </dict>
 </plist>

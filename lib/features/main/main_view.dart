@@ -26,6 +26,7 @@ class MainPage extends StatelessWidget {
               ),
             ),
             child: AutoTabsScaffold(
+              resizeToAvoidBottomInset: true,
               routes: const [HomeRoute(), ProfileRoute()],
               backgroundColor: AppColors.transparent,
               bottomNavigationBuilder: (context, tabsRouter) =>

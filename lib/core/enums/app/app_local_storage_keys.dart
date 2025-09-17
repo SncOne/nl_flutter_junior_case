@@ -9,3 +9,5 @@ final secureStorage = FlutterSecureStorage(
   aOptions: getAndroidOptions(),
   iOptions: getIOSOptions(),
 );
+
+enum AppLocalStorageKeys { jwtToken, selectedLanguageCode }

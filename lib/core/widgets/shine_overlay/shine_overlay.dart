@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:jr_case_boilerplate/core/constants/app_colors.dart';
 
 class ShineOverlay extends StatelessWidget {
-  const ShineOverlay({super.key});
+  final double height;
+  const ShineOverlay({super.key, this.height = 100});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         width: MediaQuery.sizeOf(context).width / 2,
-        height: 100,
+        height: height,
         decoration: const BoxDecoration(
           gradient: RadialGradient(
             center: Alignment.center,

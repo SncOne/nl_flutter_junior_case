@@ -16,6 +16,15 @@
     "action": "Okudum ve Kabul ediyorum.",
     "suffix": "Lütfen kayıt olmadan önce kullanıcı sözleşmesini okuyunuz."
   },
+  "terms": {
+    "title": "Hoşgeldiniz",
+    "intro": "Bu örnek kullanım şartları metnidir. Uygulamayı kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız.",
+    "item1": "1. Hizmetin kullanımı: Uygulama içeriği bilgilendirme amaçlıdır ve değiştirilebilir. Kullanıcılar içerikleri sorumlulukları dahilinde kullanmalıdır.",
+    "item2": "2. Sorumluluk reddi: Uygulama sağlayıcısı, uygulamanın sürekli erişilebilir olacağını veya içeriklerin hatasız olacağını garanti etmez.",
+    "item3": "3. Gizlilik: Kullanıcıların kişisel verileri gizlilik politikasına uygun şekilde işlenir. (Bu örnek projede gerçek veri işleme olmayabilir.)",
+    "note": "Bu metin örnektir. Gerçek bir proje için yasal metinleri hukuk danışmanınızla hazırlayın veya yerel düzenlemelere uygun olarak güncelleyin.",
+    "accept": "Kabul Ediyorum"
+  },
   "haveAccount": "Hesabın var mı?",
   "profile_detail": "Profil Detayı",
   "upload_photo": "Fotoğraf Yükle",
@@ -24,6 +33,8 @@
   "skip": "Atla",
   "home": "Ana Sayfa",
   "profile": "Profil",
+  "failed_to_fetch": "Veri alınamadı: ${error}",
+  "something_went_wrong": "Bir şeyler ters gitti: ${error}",
   "add_photo": "Fotoğraf Ekle",
   "limited_offer": "Sınırlı Teklif",
   "limited_offer_subtitle": "Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!",
@@ -34,5 +45,21 @@
   "more_likes": "Daha Fazla Beğeni",
   "unlock_features_title": "Kilidi açmak için bir jeton paketi seçin",
   "weekly": "Başına Haftalık",
-  "see_all_token_plans": "Tüm Jetonları Gör"
+  "token": "Jeton",
+  "see_all_token_plans": "Tüm Jetonları Gör",
+  "logout": "Çıkış Yap",
+  "settings": "Ayarlar",
+  "select_language": "Dil Seç",
+  "version": "Sürüm: ${value}",
+  "no_internet_connection": "İnternet Bağlantısı Yok",
+  "validation": {
+    "email_required": "E-posta gerekli",
+    "invalid_email": "Geçersiz e-posta formatı",
+    "name_required": "İsim gerekli",
+    "name_min_length": "İsim en az 3 karakter olmalıdır",
+    "password_required": "Şifre gerekli",
+    "password_min_length": "Şifre en az 6 karakter olmalıdır",
+    "confirm_password_required": "Şifre Tekrar gerekli",
+    "passwords_do_not_match": "Şifreler uyuşmuyor"
+  }
 }
