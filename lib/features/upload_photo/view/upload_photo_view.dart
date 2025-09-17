@@ -220,8 +220,10 @@ class UploadPhotoView extends HookConsumerWidget {
                                         if (context.mounted) {
                                           CustomOverlay.show(
                                             context,
-                                            message:
-                                                'Fotoğraf yüklenemedi: ${e.toString()}',
+                                            message: context.t
+                                                .something_went_wrong(
+                                                  error: e.toString(),
+                                                ),
                                             type: OverlayType.error,
                                           );
                                         }

@@ -61,5 +61,22 @@
     "password_min_length": "Şifre en az 6 karakter olmalıdır",
     "confirm_password_required": "Şifre Tekrar gerekli",
     "passwords_do_not_match": "Şifreler uyuşmuyor"
-  }
+  },
+  "liked_movies": "Beğendiklerim",
+  "gallery": "Galeri",
+  "details": "Detaylar",
+  "director": "Yönetmen",
+  "actors": "Oyuncular",
+  "genre": "Tür",
+  "language": "Dil",
+  "writer": "Yazar",
+  "released": "Yayınlanma",
+  "type": "Tür",
+  "plot": "Konu",
+  "no_liked_movies": "Görünüşe göre henüz beğendiğiniz film yok.",
+  "coming_soon": "Çok Yakında",
+  "login_success": "Başarıyla giriş yapıldı!",
+  "token_not_found": "Token bulunamadı",
+  "accept_terms": "Devam etmek için şartları kabul etmelisiniz.",
+  "registration_success": "Kayıt başarılı!"
 }

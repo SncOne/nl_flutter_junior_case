@@ -78,6 +78,23 @@ class TranslationsTr implements Translations {
 	@override String version({required Object value}) => 'Sürüm: ${value}';
 	@override String get no_internet_connection => 'İnternet Bağlantısı Yok';
 	@override late final _TranslationsValidationTr validation = _TranslationsValidationTr._(_root);
+	@override String get liked_movies => 'Beğendiklerim';
+	@override String get gallery => 'Galeri';
+	@override String get details => 'Detaylar';
+	@override String get director => 'Yönetmen';
+	@override String get actors => 'Oyuncular';
+	@override String get genre => 'Tür';
+	@override String get language => 'Dil';
+	@override String get writer => 'Yazar';
+	@override String get released => 'Yayınlanma';
+	@override String get type => 'Tür';
+	@override String get plot => 'Konu';
+	@override String get no_liked_movies => 'Görünüşe göre henüz beğendiğiniz film yok.';
+	@override String get coming_soon => 'Çok Yakında';
+	@override String get login_success => 'Başarıyla giriş yapıldı!';
+	@override String get token_not_found => 'Token bulunamadı';
+	@override String get accept_terms => 'Devam etmek için şartları kabul etmelisiniz.';
+	@override String get registration_success => 'Kayıt başarılı!';
 }
 
 // Path: termsAndConditions
@@ -187,6 +204,23 @@ extension on TranslationsTr {
 			case 'validation.password_min_length': return 'Şifre en az 6 karakter olmalıdır';
 			case 'validation.confirm_password_required': return 'Şifre Tekrar gerekli';
 			case 'validation.passwords_do_not_match': return 'Şifreler uyuşmuyor';
+			case 'liked_movies': return 'Beğendiklerim';
+			case 'gallery': return 'Galeri';
+			case 'details': return 'Detaylar';
+			case 'director': return 'Yönetmen';
+			case 'actors': return 'Oyuncular';
+			case 'genre': return 'Tür';
+			case 'language': return 'Dil';
+			case 'writer': return 'Yazar';
+			case 'released': return 'Yayınlanma';
+			case 'type': return 'Tür';
+			case 'plot': return 'Konu';
+			case 'no_liked_movies': return 'Görünüşe göre henüz beğendiğiniz film yok.';
+			case 'coming_soon': return 'Çok Yakında';
+			case 'login_success': return 'Başarıyla giriş yapıldı!';
+			case 'token_not_found': return 'Token bulunamadı';
+			case 'accept_terms': return 'Devam etmek için şartları kabul etmelisiniz.';
+			case 'registration_success': return 'Kayıt başarılı!';
 			default: return null;
 		}
 	}

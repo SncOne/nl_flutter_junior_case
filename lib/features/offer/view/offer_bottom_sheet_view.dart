@@ -22,17 +22,13 @@ class OfferBottomSheet extends HookWidget {
     final screenHeight = media.size.height;
     final screenWidth = media.size.width;
 
-    // Calculate available vertical space excluding status bar and keyboard inset
     final availableHeight =
         screenHeight - media.padding.top - media.viewInsets.bottom - 24;
 
-    // Make max sheet height equal to available height so it can fill the screen when expanded
     final maxSheetHeight = availableHeight.clamp(0.0, screenHeight);
 
-    // Ensure minSheetHeight never exceeds maxSheetHeight and scales on very small devices
     final minSheetHeight = math.min(430.0, maxSheetHeight);
 
-    // Default open state as a fraction of available height
     final defaultOpen = (maxSheetHeight * 0.75).clamp(
       minSheetHeight,
       maxSheetHeight,
@@ -108,11 +104,10 @@ class OfferBottomSheet extends HookWidget {
                                           sheetHeight.value = newH;
                                         },
                                         onVerticalDragEnd: (details) {
-                                          final velocity =
-                                              details
-                                                  .velocity
-                                                  .pixelsPerSecond
-                                                  .dy;
+                                          final velocity = details
+                                              .velocity
+                                              .pixelsPerSecond
+                                              .dy;
                                           final anchors = [
                                             minSheetHeight,
                                             defaultOpen,
@@ -120,10 +115,9 @@ class OfferBottomSheet extends HookWidget {
                                           ];
                                           double target = defaultOpen;
                                           if (velocity.abs() > 400) {
-                                            target =
-                                                velocity < 0
-                                                    ? maxSheetHeight
-                                                    : minSheetHeight;
+                                            target = velocity < 0
+                                                ? maxSheetHeight
+                                                : minSheetHeight;
                                           } else {
                                             target = anchors.reduce((a, b) {
                                               return ((sheetHeight.value - a)

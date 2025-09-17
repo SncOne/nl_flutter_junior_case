@@ -61,5 +61,22 @@
     "password_min_length": "Password must be at least 6 characters long",
     "confirm_password_required": "Confirm Password is required",
     "passwords_do_not_match": "Passwords do not match"
-  }
+  },
+  "liked_movies": "My Likes",
+  "gallery": "Gallery",
+  "details": "Details",
+  "director": "Director",
+  "actors": "Actors",
+  "genre": "Genre",
+  "language": "Language",
+  "writer": "Writer",
+  "released": "Released",
+  "type": "Type",
+  "plot": "Plot",
+  "no_liked_movies": "It seems that you have not liked any movies yet.",
+  "coming_soon": "Coming Soon",
+  "login_success": "Successfully logged in!",
+  "token_not_found": "Token not found",
+  "accept_terms": "You must accept the terms and conditions to proceed.",
+  "registration_success": "Registration successful! "
 }

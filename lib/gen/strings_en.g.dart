@@ -161,6 +161,57 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	String get no_internet_connection => 'No Internet Connection';
 
 	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
+
+	/// en: 'My Likes'
+	String get liked_movies => 'My Likes';
+
+	/// en: 'Gallery'
+	String get gallery => 'Gallery';
+
+	/// en: 'Details'
+	String get details => 'Details';
+
+	/// en: 'Director'
+	String get director => 'Director';
+
+	/// en: 'Actors'
+	String get actors => 'Actors';
+
+	/// en: 'Genre'
+	String get genre => 'Genre';
+
+	/// en: 'Language'
+	String get language => 'Language';
+
+	/// en: 'Writer'
+	String get writer => 'Writer';
+
+	/// en: 'Released'
+	String get released => 'Released';
+
+	/// en: 'Type'
+	String get type => 'Type';
+
+	/// en: 'Plot'
+	String get plot => 'Plot';
+
+	/// en: 'It seems that you have not liked any movies yet.'
+	String get no_liked_movies => 'It seems that you have not liked any movies yet.';
+
+	/// en: 'Coming Soon'
+	String get coming_soon => 'Coming Soon';
+
+	/// en: 'Successfully logged in!'
+	String get login_success => 'Successfully logged in!';
+
+	/// en: 'Token not found'
+	String get token_not_found => 'Token not found';
+
+	/// en: 'You must accept the terms and conditions to proceed.'
+	String get accept_terms => 'You must accept the terms and conditions to proceed.';
+
+	/// en: 'Registration successful! '
+	String get registration_success => 'Registration successful! ';
 }
 
 // Path: termsAndConditions
@@ -306,6 +357,23 @@ extension on Translations {
 			case 'validation.password_min_length': return 'Password must be at least 6 characters long';
 			case 'validation.confirm_password_required': return 'Confirm Password is required';
 			case 'validation.passwords_do_not_match': return 'Passwords do not match';
+			case 'liked_movies': return 'My Likes';
+			case 'gallery': return 'Gallery';
+			case 'details': return 'Details';
+			case 'director': return 'Director';
+			case 'actors': return 'Actors';
+			case 'genre': return 'Genre';
+			case 'language': return 'Language';
+			case 'writer': return 'Writer';
+			case 'released': return 'Released';
+			case 'type': return 'Type';
+			case 'plot': return 'Plot';
+			case 'no_liked_movies': return 'It seems that you have not liked any movies yet.';
+			case 'coming_soon': return 'Coming Soon';
+			case 'login_success': return 'Successfully logged in!';
+			case 'token_not_found': return 'Token not found';
+			case 'accept_terms': return 'You must accept the terms and conditions to proceed.';
+			case 'registration_success': return 'Registration successful! ';
 			default: return null;
 		}
 	}

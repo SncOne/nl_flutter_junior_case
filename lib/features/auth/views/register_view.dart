@@ -200,7 +200,7 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                     if (!termsAccepted.value) {
                                       CustomOverlay.show(
                                         context,
-                                        message: 'Lütfen şartları kabul edin',
+                                        message: context.t.accept_terms,
                                         type: OverlayType.error,
                                       );
                                       return;
@@ -220,7 +220,9 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                           if (context.mounted) {
                                             CustomOverlay.show(
                                               context,
-                                              message: 'Kayıt başarılı!',
+                                              message: context
+                                                  .t
+                                                  .registration_success,
                                               type: OverlayType.success,
                                             );
                                           }
@@ -239,18 +241,24 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                           if (context.mounted) {
                                             CustomOverlay.show(
                                               context,
-                                              message: 'Token alınamadı',
+                                              message:
+                                                  context.t.token_not_found,
                                               type: OverlayType.error,
                                             );
                                           }
                                         }
                                       } catch (e, st) {
-                                        Print.error('Login failed: $e', st: st);
+                                        Print.error(
+                                          'Register failed: $e',
+                                          st: st,
+                                        );
                                         if (context.mounted) {
                                           CustomOverlay.show(
                                             context,
-                                            message:
-                                                'Kayıt başarısız: ${e.toString()}',
+                                            message: context.t
+                                                .something_went_wrong(
+                                                  error: e.toString(),
+                                                ),
                                             type: OverlayType.error,
                                           );
                                         }
@@ -273,7 +281,7 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                     onPressed: () {
                                       CustomOverlay.show(
                                         context,
-                                        message: 'Çok yakında',
+                                        message: context.t.coming_soon,
                                         type: OverlayType.info,
                                       );
                                     },
@@ -288,7 +296,7 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                     onPressed: () {
                                       CustomOverlay.show(
                                         context,
-                                        message: 'Çok yakında',
+                                        message: context.t.coming_soon,
                                         type: OverlayType.info,
                                       );
                                     },
@@ -303,7 +311,7 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                     onPressed: () {
                                       CustomOverlay.show(
                                         context,
-                                        message: 'Çok yakında',
+                                        message: context.t.coming_soon,
                                         type: OverlayType.info,
                                       );
                                     },

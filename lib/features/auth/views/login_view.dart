@@ -183,7 +183,7 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                                 CustomOverlay.show(
                                                   context,
                                                   message:
-                                                      'Başarıyla giriş yapıldı!',
+                                                      context.t.login_success,
                                                   type: OverlayType.success,
                                                 );
                                               }
@@ -202,7 +202,8 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                               if (context.mounted) {
                                                 CustomOverlay.show(
                                                   context,
-                                                  message: 'Token alınamadı',
+                                                  message:
+                                                      context.t.token_not_found,
                                                   type: OverlayType.error,
                                                 );
                                               }
@@ -215,8 +216,10 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                             if (context.mounted) {
                                               CustomOverlay.show(
                                                 context,
-                                                message:
-                                                    'Giriş başarısız: ${e.toString()}',
+                                                message: context.t
+                                                    .something_went_wrong(
+                                                      error: e.toString(),
+                                                    ),
                                                 type: OverlayType.error,
                                               );
                                             }
@@ -239,7 +242,7 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                         onPressed: () {
                                           CustomOverlay.show(
                                             context,
-                                            message: 'Çok yakında',
+                                            message: context.t.coming_soon,
                                             type: OverlayType.info,
                                           );
                                         },
@@ -254,7 +257,7 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                         onPressed: () {
                                           CustomOverlay.show(
                                             context,
-                                            message: 'Çok yakında',
+                                            message: context.t.coming_soon,
                                             type: OverlayType.info,
                                           );
                                         },
@@ -269,7 +272,7 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                         onPressed: () {
                                           CustomOverlay.show(
                                             context,
-                                            message: 'Çok yakında',
+                                            message: context.t.coming_soon,
                                             type: OverlayType.info,
                                           );
                                         },

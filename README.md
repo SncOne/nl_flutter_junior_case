@@ -1,223 +1,143 @@
-# 🚀 Junior Case Boilerplate
+# 🎬 JR Case Flutter Uygulaması
 
-**NodeLabs Junior Developer Case Study için hazırlanmış profesyonel Flutter boilerplate projesi**
+NodeLabs Junior Developer Case Study kapsamında geliştirilen bu Flutter uygulaması, film kataloğu üzerinden kimlik doğrulama, içerik keşfi ve profil yönetimi özelliklerini uçtan uca sergileyen üretim seviyesinde bir örnek projedir. Temiz mimari ilkeleri, Riverpod tabanlı durum yönetimi ve güçlü ağ/yerel depolama altyapısı ile gerçek dünyadaki senaryolara uygun bir başlangıç noktası sunar.
 
-Bu proje, junior geliştiricilerin Flutter ile modern, ölçeklenebilir ve sürdürülebilir mobil uygulamalar geliştirmek için ihtiyaç duyacakları temel yapı taşlarını içeren kapsamlı bir başlangıç şablonudur.
-
-## 📋 İçindekiler
-
-- [Özellikler](#-özellikler)
-- [Proje Yapısı](#-proje-yapısı)
+## 📚 İçindekiler
+- [Öne Çıkan Özellikler](#-öne-çıkan-özellikler)
+- [Teknoloji Yığını](#-teknoloji-yığını)
+- [Modüler Yapı](#-modüler-yapı)
 - [Kurulum](#-kurulum)
-- [Kullanım](#-kullanım)
-- [Mimari](#-mimari)
-- [Geliştirme Rehberi](#-geliştirme-rehberi)
+- [Geliştirme Akışı](#-geliştirme-akışı)
+- [Testler](#-testler)
+- [Ağ ve Güvenlik](#-ağ-ve-güvenlik)
+- [Uluslararasılaştırma](#-uluslararasılaştırma)
+- [Ekran Görüntüleri](#-ekran-görüntüleri)
+- [Demo Videosu](#-demo-videosu)
 - [Katkıda Bulunma](#-katkıda-bulunma)
+- [Lisans](#-lisans)
 
-## ✨ Özellikler
+## ✨ Öne Çıkan Özellikler
+- **Kimlik Doğrulama Akışı**: Giriş, kayıt ve JWT tabanlı oturum sürdürme; kayıt sırasında sözleşme onayı ve form doğrulamaları.
+- **Profil & Medya Yönetimi**: Kullanıcı bilgileri, profil fotoğrafı yükleme/düzenleme ve favori filmler listesi.
+- **Sonsuz Film Akışı**: Vertikal PageView ile sonsuz kaydırmalı film kataloğu, favori yönetimi ve detay sayfası.
+- **Film Detay Deneyimi**: Postere tıklayınca tam ekran galeri, temel bilgiler, teknik detaylar ve benzeri içerikler.
+- **Özel Arayüz Bileşenleri**: Animasyonlu alt navigasyon çubuğu, özelleştirilmiş form alanları, toast/overlay bildirimleri.
+- **Bağlantı İzleme**: `connectivity_plus` ile gerçek zamanlı ağ denetimi ve bağlantı kesildiğinde özel ekran.
+- **Ayarlar & Dil Desteği**: EN/TR lokalizasyonu, dil seçimi kalıcı olarak saklanır ve anında uygulanır.
 
-### 🎯 Temel Özellikler
-- **Temiz Mimari**: Feature-first yaklaşımı ile modüler yapı
-- **Responsive Tasarım**: Tüm cihaz boyutlarına uyumlu
-- **Tema Sistemi**: Dark/Light mode desteği
-- **Routing**: Gelişmiş navigasyon sistemi
-- **State Management**: Hazır state management yapısı
-- **Form Validation**: Kapsamlı form doğrulama sistemi
+## 🧰 Teknoloji Yığını
+- **Flutter 3.8** & **Dart 3.8**
+- **State Management**: Riverpod (`hooks_riverpod`, `riverpod_annotation`)
+- **Navigasyon**: AutoRoute ve özel alt sekme yönlendirmesi
+- **Ağ & Veri**: Dio + interceptor, JWT denetimi, sonsuz sayfalama
+- **Modelleme**: Freezed & JsonSerializable ile immutable veri modelleri
+- **Yerel Depolama**: `flutter_secure_storage` ile token ve kullanıcı tercihleri
+- **Görsel & Animasyon**: Lottie, CachedNetworkImage, özel shimmer/overlay efektleri
+- **Çok Dillilik**: Slang/Slang Flutter paketleri ile çoklu dil oluşturma
 
-### 📱 Uygulama Modülleri
-- **Authentication**: Giriş/Kayıt ve sosyal medya entegrasyonu
-- **Home**: Ana sayfa ve içerik gösterimi
-- **Profile**: Kullanıcı profil yönetimi
-- **Navigation**: Alt navigasyon menüsü
-- **Upload Photo**: Fotoğraf yükleme ve düzenleme
-- **Splash**: Uygulama başlangıç ekranı
-
-## 🏗 Proje Yapısı
-
+## 🧱 Modüler Yapı
 ```
 lib/
-├── core/                          # Çekirdek sistem bileşenleri
-│   ├── constants/                 # Uygulama sabitleri
-│   │   ├── app_colors.dart       # Renk paleti
-│   │   ├── app_paddings.dart     # Padding değerleri
-│   │   ├── app_radius.dart       # Border radius değerleri
-│   │   ├── app_strings.dart      # Metin sabitleri
-│   │   └── app_text_styles.dart  # Tipografi stilleri
-│   ├── enums/                     # Enum tanımlamaları
-│   │   ├── app/
-│   │   │   └── app_local_storage_keys.dart
-│   │   └── assets/
-│   │       ├── app_fonts.dart
-│   │       ├── app_icons.dart
-│   │       └── app_images.dart
-│   ├── extensions/                # Dart extensions
-│   │   ├── app/
-│   │   │   ├── app_padding_ext.dart
-│   │   │   ├── app_radius_ext.dart
-│   │   │   └── bottom_sheet_ext.dart
-│   │   └── assets/
-│   │       ├── app_icons_ext.dart
-│   │       └── app_images_ext.dart
-│   ├── helpers/                   # Yardımcı sınıflar
-│   │   └── bottom_sheet/
-│   ├── mixins/                    # Dart mixins
-│   │   └── validators_mixin.dart
-│   ├── models/                    # Veri modelleri
-│   │   └── offer_package_model.dart
-│   ├── routes/                    # Routing sistemi
-│   │   ├── app_router.dart
-│   │   └── app_routes.dart
-│   └── widgets/                   # Ortak widget'lar
-│       ├── app_bar/
-│       ├── bottom_sheet/
-│       ├── buttons/
-│       ├── cached_network_image/
-│       ├── nav_bar/
-│       └── text_form_field/
-├── features/                      # Özellik modülleri
-│   ├── auth/                     # Kimlik doğrulama
-│   │   ├── enums/
-│   │   ├── extensions/
-│   │   ├── models/
-│   │   ├── views/
-│   │   └── widgets/
-│   ├── home/                     # Ana sayfa
-│   ├── nav_bar/                  # Navigasyon
-│   ├── profile/                  # Profil
-│   ├── splash/                   # Başlangıç
-│   └── upload_photo/             # Fotoğraf yükleme
-└── main.dart                     # Uygulama giriş noktası
+├── core/
+│   ├── constants/        # Renk, tipografi, padding vb.
+│   ├── enums/            # Global enum ve varlık tanımları
+│   ├── helpers/          # Yardımcı fonksiyonlar (örn. overlay)
+│   ├── mixins/           # Form doğrulama mixin'leri
+│   ├── models/           # Freezed modelleri (MovieListModel vb.)
+│   ├── providers/        # Uygulama genelinde izlenen servisler
+│   ├── routes/           # AutoRoute konfigürasyonu ve özel route tipleri
+│   ├── services/         # Dio, bağlantı takibi vb. altyapı servisleri
+│   └── widgets/          # Ortak bileşenler (app bar, nav bar, butonlar)
+├── features/
+│   ├── auth/             # Login, Register, fotoğraf yükleme ve ilgili provider'lar
+│   ├── home/             # Sonsuz film akışı ve film sağlayıcıları
+│   ├── movie_detail/     # Film detay ekranı
+│   ├── profile/          # Profil & favoriler ekranı
+│   ├── settings/         # Dil seçimi ve tercihler
+│   ├── no_connection/    # İnternet bağlantısı yok ekranı
+│   └── nav_bar/          # Alt navigasyon ve animasyonlu öğeler
+└── main.dart             # Uygulama girişi, tema ve lokalizasyon kurulumu
 ```
 
-## 🛠 Kurulum
-
-### Ön Gereksinimler
-- Flutter SDK (3.8.1+)
+## ⚙️ Kurulum
+### 1. Gereksinimler
+- Flutter SDK 3.8.1+
 - Dart SDK
-- Android Studio / VS Code
-- iOS geliştirme için Xcode (macOS)
+- Android Studio veya VS Code (+ Flutter eklentileri)
+- iOS dağıtımı için Xcode (macOS)
 
-### Adım 1: Projeyi Klonlayın
+### 2. Depoyu Çekin
 ```bash
-git clone [repository-url]
+git clone <repo-url>
 cd jr_case_boilerplate
 ```
 
-### Adım 2: Bağımlılıkları Yükleyin
+### 3. Bağımlılıkları Kurun
 ```bash
 flutter pub get
 ```
 
-### Adım 3: Platformları Yapılandırın
-
-#### Android
+### 4. Kod Üretimi (varsa)
 ```bash
-flutter build apk --debug
+flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-#### iOS
-```bash
-flutter build ios --debug
-```
-
-### Adım 4: Uygulamayı Çalıştırın
+### 5. Uygulamayı Çalıştırın
 ```bash
 flutter run
 ```
+> Android/iOS cihaz veya emulator üzerinde çalıştırın. Çevrimdışı senaryoları test etmek için sistem bağlantısını kesebilirsiniz.
 
-## 🎯 Kullanım
+## 🚀 Geliştirme Akışı
+- Yeni bir feature için `lib/features/<feature_name>/` altında alt klasör (views, provider, widgets) açın.
+- Ortak bileşenleri `lib/core/widgets/` altında paylaşın.
+- Paket güncellemelerinde `build_runner` komutunu tekrar çalıştırın.
+- Ağ çağrıları için `DioService` üzerinden JWT ve hata yönetimini kullanın.
 
-### Yeni Feature Ekleme
-
-1. `lib/features/` klasörü altında yeni bir klasör oluşturun
-2. Feature yapısını takip edin:
-```
-feature_name/
-├── enums/
-├── extensions/
-├── models/
-├── views/
-└── widgets/
-```
-
-### Widget Oluşturma
-
-1. Ortak widget'lar için `lib/core/widgets/` kullanın
-2. Feature-specific widget'lar için ilgili feature'ın `widgets/` klasörünü kullanın
-
-### Tema Özelleştirme
-
-1. `lib/core/constants/` klasöründeki dosyaları düzenleyin:
-   - `app_colors.dart` - Renk paleti
-   - `app_text_styles.dart` - Tipografi
-   - `app_paddings.dart` - Boşluk değerleri
-
-## 🏛 Mimari
-
-Bu proje **Feature-First Architecture** yaklaşımını benimser:
-
-### Katmanlar
-1. **Presentation Layer**: Views ve Widgets
-2. **Business Logic Layer**: State management ve business logic
-3. **Data Layer**: Models ve data sources
-
-### Prensipler
-- **Separation of Concerns**: Her modül kendi sorumluluğuna odaklanır
-- **Dependency Injection**: Gevşek bağlılık
-- **Testability**: Kolay test edilebilir yapı
-- **Scalability**: Büyüyen projelere uygun
-
-## 📚 Geliştirme Rehberi
-
-### Code Style
-- Dart resmi style guide'ını takip edin
-- `flutter_lints` kurallarına uyun
-- Meaningful naming conventions kullanın
-
-### Best Practices
-1. **Widget Composition**: Küçük, yeniden kullanılabilir widget'lar oluşturun
-2. **State Management**: Uygun state management çözümü seçin
-3. **Performance**: Build method'larını optimize edin
-4. **Accessibility**: Erişilebilirlik standartlarına uyun
-
-### Testing
+## ✅ Testler
+Varsayılan Flutter test çerçevesi proje ile birlikte gelir.
 ```bash
-# Unit testler
 flutter test
-
-# Widget testler
-flutter test test/widget_test.dart
-
-# Integration testler
-flutter drive --target=test_driver/app.dart
 ```
+> Gerektiğinde widget/integration test senaryolarını `test/` ve `integration_test/` klasörlerine ekleyin.
+
+## 🌐 Ağ ve Güvenlik
+- **Taban URL**: `https://caseapi.servicelabs.tech/`
+- **Interceptor**: Otomatik JWT ekleme, token süresi dolduğunda giriş ekranına yönlendirme
+- **Hata Yönetimi**: `CustomException` ile anlamlı hata mesajları
+- **Güvenli Depolama**: Token ve dil tercihi `flutter_secure_storage` içinde saklanır
+
+## 🌍 Uluslararasılaştırma
+- `assets/i18n/en.i18n.json` ve `assets/i18n/tr.i18n.json` dosyaları Slang üzerinden derlenir.
+- Dil seçimi Ayarlar ekranından yapılır ve uygulama yeniden başlatmadan güncellenir.
+
+## 📸 Ekran Görüntüleri
+> 📌 Aşağıdaki görseller henüz eklenmedi. Her ekranı kaydedip `assets/screenshots/` klasörüne ekledikten sonra ilgili dosya yollarını güncelleyin.
+
+| Ekran | Önerilen Dosya | Not |
+| --- | --- | --- |
+| Splash & Lottie animasyonu | `assets/screenshots/splash.png` | Marka logosu ve geçiş animasyonu |
+| Giriş (Login) | `assets/screenshots/login.png` | Hata mesajı/şifre gösterimini de yakalayabilirsiniz |
+| Kayıt (Register + Sözleşme) | `assets/screenshots/register.png` | Sözleşme onayı ve validasyon örnekleri |
+| Profil Fotoğrafı Yükleme | `assets/screenshots/upload_photo.png` | Galeriden seçim veya kamera placeholder |
+| Sonsuz Film Akışı (Home) | `assets/screenshots/home_feed.png` | Favori butonu görünür halde |
+| Film Detay | `assets/screenshots/movie_detail.png` | Poster galerisini ve teknik detayları gösterin |
+| Favorilerle Profil | `assets/screenshots/profile.png` | Kullanıcı bilgisi ve favori grid'i |
+| Ayarlar & Dil Değişimi | `assets/screenshots/settings.png` | Dil dropdown açık şekilde |
+| İnternet Yok ekranı | `assets/screenshots/no_connection.png` | Lottie animasyonu ve uyarı metni |
+
+## 🎥 Demo Videosu
+| İçerik | Önerilen Format | Bağlantı |
+| --- | --- | --- |
+| Uçtan uca kullanıcı akışı (Splash → Login → Home → Detay → Profil → Ayarlar) | YouTube "Liste Dışı" veya Loom linki | `[Video bağlantınızı buraya ekleyin]` |
+
+> 🎬 Videoyu 60-90 saniye arasında tutup temel kullanıcı akışını gösterin. Bağlantıyı README'ye ekledikten sonra erişim yetkilerini (linke sahip olan görebilir) kontrol edin.
 
 ## 🤝 Katkıda Bulunma
-
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit yapın (`git commit -m 'Add some amazing feature'`)
-4. Branch'i push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
-
-## 📞 Destek
-
-Bu boilerplate hakkında sorularınız için:
-- GitHub Issues kullanın
-- Dokümantasyonu inceleyin
-- Flutter topluluğuna başvurun
+1. Depoyu fork'layın
+2. Feature branch açın: `git checkout -b feature/ekleme`
+3. Commit'leyin: `git commit -m "Açıklayıcı mesaj"`
+4. Branch'i push'layın ve Pull Request oluşturun
 
 ## 📄 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
-
----
-
-**NodeLabs tarafından junior geliştiriciler için özel olarak hazırlanmıştır** 🚀
-
-### 🎓 Öğrenme Kaynakları
-
-- [Flutter Dokümantasyonu](https://docs.flutter.dev/)
-- [Dart Language Tour](https://dart.dev/guides/language/language-tour)
-- [Flutter Widget Catalog](https://docs.flutter.dev/development/ui/widgets)
-- [Material Design Guidelines](https://material.io/design)
+Bu proje MIT lisansı ile lisanslanmıştır. Ayrıntılar için `LICENSE` dosyasına göz atın.
