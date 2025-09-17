@@ -30,27 +30,22 @@ NodeLabs Junior Developer Case Study için hazırlanan bu proje, film kataloğu 
 
 ## 📸 Ekran Görüntüleri
 
-- **Splash**  
-  ![Splash](assets/screenshots/splash.png)
-- **Giriş**  
-  ![Giriş](assets/screenshots/login.png)
-- **Kayıt**  
-  ![Kayıt](assets/screenshots/register.png)
-- **Fotoğraf Yükle**  
-  ![Fotoğraf Yükle](assets/screenshots/upload_photo.png)
-- **Ana Akış**  
-  ![Ana Akış](assets/screenshots/home.png)
-- **Film Detayı**  
-  ![Film Detayı](assets/screenshots/movie_detail.png)
-- **Profil**  
-  ![Profil](assets/screenshots/profile.png)
-- **Ayarlar**  
-  ![Ayarlar](assets/screenshots/settings.png)
+<div align="center">
+
+<img src="assets/screenshots/splash.png" alt="Splash" width="220" />
+<img src="assets/screenshots/login.png" alt="Giriş" width="220" />
+<img src="assets/screenshots/register.png" alt="Kayıt" width="220" />
+<img src="assets/screenshots/upload_photo.png" alt="Fotoğraf Yükle" width="220" />
+<img src="assets/screenshots/home.png" alt="Ana Akış" width="220" />
+<img src="assets/screenshots/movie_detail.png" alt="Film Detayı" width="220" />
+<img src="assets/screenshots/profile.png" alt="Profil" width="220" />
+<img src="assets/screenshots/settings.png" alt="Ayarlar" width="220" />
+
+</div>
 
 ## 🎥 Demo Videosu
 
 [![Demo Videosu](https://img.youtube.com/vi/hR2DnCVrLRI/hqdefault.jpg)](https://youtube.com/shorts/hR2DnCVrLRI "YouTube'da izle")
-
 
 ## 🧰 Teknoloji ve Mimari
 
