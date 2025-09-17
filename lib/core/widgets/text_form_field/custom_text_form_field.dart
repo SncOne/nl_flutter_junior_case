@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:jr_case_boilerplate/core/constants/app_colors.dart';
 import 'package:jr_case_boilerplate/core/constants/app_text_styles.dart';
 import 'package:jr_case_boilerplate/core/enums/assets/app_icons.dart';
+import 'package:jr_case_boilerplate/core/widgets/buttons/custom_primary_button.dart';
 
 class CustomTextFormField extends HookWidget {
   final String? hintText;
@@ -12,6 +13,7 @@ class CustomTextFormField extends HookWidget {
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
   final bool obscureText;
   final bool enabled;
   final Widget? prefixIcon;
@@ -38,6 +40,7 @@ class CustomTextFormField extends HookWidget {
     this.onChanged,
     this.controller,
     this.keyboardType,
+    this.textInputAction,
     this.obscureText = false,
     this.enabled = true,
     this.prefixIcon,
@@ -90,12 +93,16 @@ class CustomTextFormField extends HookWidget {
 
     Widget? buildSuffixIcon() {
       if (showVisibilityToggle && obscureText) {
-        return IconButton(
-          icon: Image.asset(
-            isObscured.value ? AppIcons.obsecureHide : AppIcons.obsecureShow,
-            color: const Color(0xFF9CA3AF),
+        return ExcludeFocus(
+          excluding: true,
+          child: AppButton(
+            rightIcon: isObscured.value
+                ? AppIcons.obsecureHide
+                : AppIcons.obsecureShow,
+            iconColor: AppColors.white30,
+            isFilled: false,
+            onPressed: toggleVisibility,
           ),
-          onPressed: toggleVisibility,
         );
       }
       return suffixIcon;
@@ -110,6 +117,7 @@ class CustomTextFormField extends HookWidget {
           focusNode: activeFocusNode,
           keyboardType: keyboardType,
           obscureText: isObscured.value,
+          textInputAction: textInputAction ?? TextInputAction.done,
           enabled: enabled,
           maxLines: maxLines,
           maxLength: maxLength,

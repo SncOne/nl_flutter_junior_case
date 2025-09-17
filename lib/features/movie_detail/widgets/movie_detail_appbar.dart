@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jr_case_boilerplate/core/constants/app_colors.dart';
 import 'package:jr_case_boilerplate/core/models/movie_list_model.dart';
+import 'package:jr_case_boilerplate/core/widgets/cached_network_image/custom_cached_network_image.dart';
 
 class MovieDetailAppBar extends StatelessWidget {
   final MovieModel movie;
@@ -22,14 +23,15 @@ class MovieDetailAppBar extends StatelessWidget {
       pinned: true,
       backgroundColor: AppColors.transparent,
       elevation: 0,
+      iconTheme: const IconThemeData(color: AppColors.white),
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(
-              movie.poster,
+            CustomCachedNetworkImage(
+              imageUrl: movie.poster,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
+              errorBuilder: (context, error) {
                 return Container(
                   color: AppColors.black,
                   child: const Icon(

@@ -35,7 +35,6 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-
         body: LayoutBuilder(
           builder: (context, constraints) {
             final isTablet = constraints.maxWidth > 600;
@@ -123,6 +122,7 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                         controller: emailController,
                                         keyboardType:
                                             TextInputType.emailAddress,
+                                        textInputAction: TextInputAction.next,
                                         prefixIcon: Image.asset(AppIcons.mail),
                                         validator: (value) =>
                                             validateEmail(value),
@@ -130,6 +130,9 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                       CustomTextFormField(
                                         hintText: context.t.password,
                                         controller: passwordController,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        textInputAction: TextInputAction.done,
                                         obscureText: true,
                                         showVisibilityToggle: true,
                                         prefixIcon: Image.asset(AppIcons.lock),
@@ -139,7 +142,13 @@ class LoginView extends HookConsumerWidget with ValidatorsMixin {
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            CustomOverlay.show(
+                                              context,
+                                              message: context.t.coming_soon,
+                                              type: OverlayType.info,
+                                            );
+                                          },
                                           child: Text(
                                             context.t.forgotPassword,
                                             style:

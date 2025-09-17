@@ -1,143 +1,84 @@
 # 🎬 JR Case Flutter Uygulaması
 
-NodeLabs Junior Developer Case Study kapsamında geliştirilen bu Flutter uygulaması, film kataloğu üzerinden kimlik doğrulama, içerik keşfi ve profil yönetimi özelliklerini uçtan uca sergileyen üretim seviyesinde bir örnek projedir. Temiz mimari ilkeleri, Riverpod tabanlı durum yönetimi ve güçlü ağ/yerel depolama altyapısı ile gerçek dünyadaki senaryolara uygun bir başlangıç noktası sunar.
+NodeLabs Junior Developer Case Study için hazırlanan bu proje, film kataloğu etrafında şekillenen uçtan uca bir kullanıcı deneyimini sergiliyor. Modern Flutter mimarisi, Riverpod tabanlı durum yönetimi ve Dio destekli ağ katmanı ile gerçek ürün davranışını taklit eden bir case olarak tasarlandı.
 
-## 📚 İçindekiler
-- [Öne Çıkan Özellikler](#-öne-çıkan-özellikler)
-- [Teknoloji Yığını](#-teknoloji-yığını)
-- [Modüler Yapı](#-modüler-yapı)
-- [Kurulum](#-kurulum)
-- [Geliştirme Akışı](#-geliştirme-akışı)
-- [Testler](#-testler)
-- [Ağ ve Güvenlik](#-ağ-ve-güvenlik)
-- [Uluslararasılaştırma](#-uluslararasılaştırma)
-- [Ekran Görüntüleri](#-ekran-görüntüleri)
-- [Demo Videosu](#-demo-videosu)
-- [Katkıda Bulunma](#-katkıda-bulunma)
-- [Lisans](#-lisans)
+## 🎯 Case Özeti
+
+- Splash ekranı ile başlayan deneyim, kimlik doğrulama adımları üzerinden kişiselleştirilmiş içerik akışına ulaşıyor.
+- Filmler harici bir API'den çekiliyor; kullanıcılar kaydırmalı akıştan detay sayfalarına geçebiliyor ve favorilerini yönetebiliyor.
+- Profil fotoğrafı yükleme, dil tercihi ve bağlantı kontrolü gibi yardımcı akışlar senaryonun parçası.
+
+## 🔄 Kullanıcı Akışı
+
+1. **Splash**: Lottie animasyonu ve marka görünümü.
+2. **Giriş / Kayıt**: Validasyonlu formlar, şartlar & koşullar onayı.
+3. **Fotoğraf Yükle** (opsiyonel): Profil görseli seçme ve kaydetme.
+4. **Ana Akış**: Sonsuz dikey kaydırma ile film kartları.
+5. **Film Detayı**: Poster galerisi, teknik bilgiler ve favoriye ekleme.
+6. **Profil**: Kullanıcı bilgileri ve favori listesi.
+7. **Ayarlar**: EN/TR dil değişimi, sürüm bilgisi.
+8. **Bağlantı Kontrolü**: İnternet kesilince özel uyarı ekranı.
 
 ## ✨ Öne Çıkan Özellikler
-- **Kimlik Doğrulama Akışı**: Giriş, kayıt ve JWT tabanlı oturum sürdürme; kayıt sırasında sözleşme onayı ve form doğrulamaları.
-- **Profil & Medya Yönetimi**: Kullanıcı bilgileri, profil fotoğrafı yükleme/düzenleme ve favori filmler listesi.
-- **Sonsuz Film Akışı**: Vertikal PageView ile sonsuz kaydırmalı film kataloğu, favori yönetimi ve detay sayfası.
-- **Film Detay Deneyimi**: Postere tıklayınca tam ekran galeri, temel bilgiler, teknik detaylar ve benzeri içerikler.
-- **Özel Arayüz Bileşenleri**: Animasyonlu alt navigasyon çubuğu, özelleştirilmiş form alanları, toast/overlay bildirimleri.
-- **Bağlantı İzleme**: `connectivity_plus` ile gerçek zamanlı ağ denetimi ve bağlantı kesildiğinde özel ekran.
-- **Ayarlar & Dil Desteği**: EN/TR lokalizasyonu, dil seçimi kalıcı olarak saklanır ve anında uygulanır.
 
-## 🧰 Teknoloji Yığını
-- **Flutter 3.8** & **Dart 3.8**
-- **State Management**: Riverpod (`hooks_riverpod`, `riverpod_annotation`)
-- **Navigasyon**: AutoRoute ve özel alt sekme yönlendirmesi
-- **Ağ & Veri**: Dio + interceptor, JWT denetimi, sonsuz sayfalama
-- **Modelleme**: Freezed & JsonSerializable ile immutable veri modelleri
-- **Yerel Depolama**: `flutter_secure_storage` ile token ve kullanıcı tercihleri
-- **Görsel & Animasyon**: Lottie, CachedNetworkImage, özel shimmer/overlay efektleri
-- **Çok Dillilik**: Slang/Slang Flutter paketleri ile çoklu dil oluşturma
+- JWT tabanlı oturum yönetimi ve otomatik token yenileme kontrollü Dio interceptor'ı.
+- Riverpod ile ayrışmış provider yapısı; film listesi için sonsuz sayfalama mantığı.
+- Favori filmler için yerel durum takibi ve profil ekranında grid görünümü.
+- Fotoğraf yükleme akışı: Galeriden seçim, güvenli depolama entegrasyonu.
+- Animasyonlu alt navigasyon çubuğu ve özel overlay/toast bileşenleri.
+- `connectivity_plus` ile gerçek zamanlı ağ izleme ve yönlendirme.
 
-## 🧱 Modüler Yapı
-```
-lib/
-├── core/
-│   ├── constants/        # Renk, tipografi, padding vb.
-│   ├── enums/            # Global enum ve varlık tanımları
-│   ├── helpers/          # Yardımcı fonksiyonlar (örn. overlay)
-│   ├── mixins/           # Form doğrulama mixin'leri
-│   ├── models/           # Freezed modelleri (MovieListModel vb.)
-│   ├── providers/        # Uygulama genelinde izlenen servisler
-│   ├── routes/           # AutoRoute konfigürasyonu ve özel route tipleri
-│   ├── services/         # Dio, bağlantı takibi vb. altyapı servisleri
-│   └── widgets/          # Ortak bileşenler (app bar, nav bar, butonlar)
-├── features/
-│   ├── auth/             # Login, Register, fotoğraf yükleme ve ilgili provider'lar
-│   ├── home/             # Sonsuz film akışı ve film sağlayıcıları
-│   ├── movie_detail/     # Film detay ekranı
-│   ├── profile/          # Profil & favoriler ekranı
-│   ├── settings/         # Dil seçimi ve tercihler
-│   ├── no_connection/    # İnternet bağlantısı yok ekranı
-│   └── nav_bar/          # Alt navigasyon ve animasyonlu öğeler
-└── main.dart             # Uygulama girişi, tema ve lokalizasyon kurulumu
-```
+## 📸 Ekran Görüntüleri
 
-## ⚙️ Kurulum
-### 1. Gereksinimler
-- Flutter SDK 3.8.1+
-- Dart SDK
-- Android Studio veya VS Code (+ Flutter eklentileri)
-- iOS dağıtımı için Xcode (macOS)
+- **Splash**  
+  ![Splash](assets/screenshots/splash.png)
+- **Giriş**  
+  ![Giriş](assets/screenshots/login.png)
+- **Kayıt**  
+  ![Kayıt](assets/screenshots/register.png)
+- **Fotoğraf Yükle**  
+  ![Fotoğraf Yükle](assets/screenshots/upload_photo.png)
+- **Ana Akış**  
+  ![Ana Akış](assets/screenshots/home.png)
+- **Film Detayı**  
+  ![Film Detayı](assets/screenshots/movie_detail.png)
+- **Profil**  
+  ![Profil](assets/screenshots/profile.png)
+- **Ayarlar**  
+  ![Ayarlar](assets/screenshots/settings.png)
 
-### 2. Depoyu Çekin
+## 🎥 Demo Videosu
+
+[![Demo Videosu](https://img.youtube.com/vi/hR2DnCVrLRI/hqdefault.jpg)](https://youtube.com/shorts/hR2DnCVrLRI "YouTube'da izle")
+
+
+## 🧰 Teknoloji ve Mimari
+
+- **Dil & SDK**: Flutter 3.8, Dart 3.8
+- **State Management**: Riverpod, Hooks Riverpod, `riverpod_annotation`
+- **Navigasyon**: AutoRoute, özel bottom sheet ve dialog route'ları
+- **Veri Katmanı**: Dio + interceptor, Freezed & JsonSerializable modelleri
+- **Ağ Bağlantısı Kontrolü**: Connectivity Plus ile internet bağlantısı kontrolü
+- **Depolama**: `flutter_secure_storage` ile JWT & kullanıcı tercihleri
+- **UI/Animasyon**: Lottie, CachedNetworkImage, özel overlay ve nav bar animasyonları
+- **Kod Üretimi**: `build_runner`, `freezed`, `json_serializable`
+
+## 🌐 API ve Veri Akışı
+
+- Taban URL: `https://caseapi.servicelabs.tech/`
+- İstekler `DioService` üzerinden geçerek Authorization header'ı otomatik ekleniyor.
+- Token süresi dolduğunda kullanıcı giriş ekranına yönlendiriliyor; anlamlı hata mesajları için `CustomException` kullanılıyor.
+
+## 🌍 Lokalizasyon & Ayarlar
+
+- Slang ile EN/TR çevirileri derleniyor (`assets/i18n/en.i18n.json`, `assets/i18n/tr.i18n.json`).
+- Ayarlar ekranından seçilen dil `flutter_secure_storage` üzerinden saklanıyor ve uygulamada anında uygulanıyor.
+
+## 🚀 Projeyi Çalıştırma
+
 ```bash
 git clone <repo-url>
 cd jr_case_boilerplate
-```
-
-### 3. Bağımlılıkları Kurun
-```bash
 flutter pub get
-```
-
-### 4. Kod Üretimi (varsa)
-```bash
-flutter pub run build_runner build --delete-conflicting-outputs
-```
-
-### 5. Uygulamayı Çalıştırın
-```bash
 flutter run
 ```
-> Android/iOS cihaz veya emulator üzerinde çalıştırın. Çevrimdışı senaryoları test etmek için sistem bağlantısını kesebilirsiniz.
-
-## 🚀 Geliştirme Akışı
-- Yeni bir feature için `lib/features/<feature_name>/` altında alt klasör (views, provider, widgets) açın.
-- Ortak bileşenleri `lib/core/widgets/` altında paylaşın.
-- Paket güncellemelerinde `build_runner` komutunu tekrar çalıştırın.
-- Ağ çağrıları için `DioService` üzerinden JWT ve hata yönetimini kullanın.
-
-## ✅ Testler
-Varsayılan Flutter test çerçevesi proje ile birlikte gelir.
-```bash
-flutter test
-```
-> Gerektiğinde widget/integration test senaryolarını `test/` ve `integration_test/` klasörlerine ekleyin.
-
-## 🌐 Ağ ve Güvenlik
-- **Taban URL**: `https://caseapi.servicelabs.tech/`
-- **Interceptor**: Otomatik JWT ekleme, token süresi dolduğunda giriş ekranına yönlendirme
-- **Hata Yönetimi**: `CustomException` ile anlamlı hata mesajları
-- **Güvenli Depolama**: Token ve dil tercihi `flutter_secure_storage` içinde saklanır
-
-## 🌍 Uluslararasılaştırma
-- `assets/i18n/en.i18n.json` ve `assets/i18n/tr.i18n.json` dosyaları Slang üzerinden derlenir.
-- Dil seçimi Ayarlar ekranından yapılır ve uygulama yeniden başlatmadan güncellenir.
-
-## 📸 Ekran Görüntüleri
-> 📌 Aşağıdaki görseller henüz eklenmedi. Her ekranı kaydedip `assets/screenshots/` klasörüne ekledikten sonra ilgili dosya yollarını güncelleyin.
-
-| Ekran | Önerilen Dosya | Not |
-| --- | --- | --- |
-| Splash & Lottie animasyonu | `assets/screenshots/splash.png` | Marka logosu ve geçiş animasyonu |
-| Giriş (Login) | `assets/screenshots/login.png` | Hata mesajı/şifre gösterimini de yakalayabilirsiniz |
-| Kayıt (Register + Sözleşme) | `assets/screenshots/register.png` | Sözleşme onayı ve validasyon örnekleri |
-| Profil Fotoğrafı Yükleme | `assets/screenshots/upload_photo.png` | Galeriden seçim veya kamera placeholder |
-| Sonsuz Film Akışı (Home) | `assets/screenshots/home_feed.png` | Favori butonu görünür halde |
-| Film Detay | `assets/screenshots/movie_detail.png` | Poster galerisini ve teknik detayları gösterin |
-| Favorilerle Profil | `assets/screenshots/profile.png` | Kullanıcı bilgisi ve favori grid'i |
-| Ayarlar & Dil Değişimi | `assets/screenshots/settings.png` | Dil dropdown açık şekilde |
-| İnternet Yok ekranı | `assets/screenshots/no_connection.png` | Lottie animasyonu ve uyarı metni |
-
-## 🎥 Demo Videosu
-| İçerik | Önerilen Format | Bağlantı |
-| --- | --- | --- |
-| Uçtan uca kullanıcı akışı (Splash → Login → Home → Detay → Profil → Ayarlar) | YouTube "Liste Dışı" veya Loom linki | `[Video bağlantınızı buraya ekleyin]` |
-
-> 🎬 Videoyu 60-90 saniye arasında tutup temel kullanıcı akışını gösterin. Bağlantıyı README'ye ekledikten sonra erişim yetkilerini (linke sahip olan görebilir) kontrol edin.
-
-## 🤝 Katkıda Bulunma
-1. Depoyu fork'layın
-2. Feature branch açın: `git checkout -b feature/ekleme`
-3. Commit'leyin: `git commit -m "Açıklayıcı mesaj"`
-4. Branch'i push'layın ve Pull Request oluşturun
-
-## 📄 Lisans
-Bu proje MIT lisansı ile lisanslanmıştır. Ayrıntılar için `LICENSE` dosyasına göz atın.

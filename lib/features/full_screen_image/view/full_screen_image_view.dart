@@ -32,10 +32,9 @@ class FullScreenImageView extends HookWidget {
         transformationController.value = Matrix4.identity();
       } else {
         final position = doubleTapDetails.value!.localPosition;
-        transformationController.value =
-            Matrix4.identity()
-              ..translateByDouble(-position.dx * 2, -position.dy * 2, 0.0, 0.0)
-              ..scaleByDouble(3.5, 3.5, 1.0, 1.0);
+        transformationController.value = Matrix4.identity()
+          ..translateByDouble(-position.dx * 2, -position.dy * 2, 1, 1)
+          ..scaleByDouble(3.5, 3.5, 1, 1);
       }
     }
 
@@ -98,10 +97,9 @@ class FullScreenImageView extends HookWidget {
           child: PageView.builder(
             itemCount: urls.length,
             controller: PageController(initialPage: index),
-            physics:
-                isZoomedIn.value
-                    ? const NeverScrollableScrollPhysics()
-                    : const BouncingScrollPhysics(),
+            physics: isZoomedIn.value
+                ? const NeverScrollableScrollPhysics()
+                : const BouncingScrollPhysics(),
             itemBuilder: (final context, final index) {
               final imageUrl = urls[index];
               final isAsset = imageUrl.startsWith('assets/');
@@ -116,25 +114,24 @@ class FullScreenImageView extends HookWidget {
                       onInteractionEnd: onInteractionEnd,
                       minScale: 0.5,
                       maxScale: 5,
-                      child:
-                          isAsset
-                              ? Image.asset(imageUrl, fit: BoxFit.contain)
-                              : CustomCachedNetworkImage(
-                                imageUrl: imageUrl,
-                                fit: BoxFit.contain,
-                                errorBuilder: (context, error) {
-                                  return Container(
-                                    width: double.infinity,
-                                    color: AppColors.black,
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: const Icon(
-                                      Icons.broken_image,
-                                      color: AppColors.white50,
-                                      size: 40,
-                                    ),
-                                  );
-                                },
-                              ),
+                      child: isAsset
+                          ? Image.asset(imageUrl, fit: BoxFit.contain)
+                          : CustomCachedNetworkImage(
+                              imageUrl: imageUrl,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error) {
+                                return Container(
+                                  width: double.infinity,
+                                  color: AppColors.black,
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: const Icon(
+                                    Icons.broken_image,
+                                    color: AppColors.white50,
+                                    size: 40,
+                                  ),
+                                );
+                              },
+                            ),
                     ),
                   ),
                 ),

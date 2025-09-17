@@ -12,6 +12,7 @@ class ProfileMovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () => context.router.push(MovieDetailRoute(movie: movie)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,22 +20,25 @@ class ProfileMovieCard extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CustomCachedNetworkImage(
-                imageUrl: movie.poster,
-                fit: BoxFit.cover,
+              child: IgnorePointer(
+                ignoring: true,
+                child: CustomCachedNetworkImage(
+                  imageUrl: movie.poster,
+                  fit: BoxFit.cover,
 
-                errorBuilder: (context, error) {
-                  return Container(
-                    width: double.infinity,
-                    color: AppColors.white20,
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Icon(
-                      Icons.movie,
-                      size: 50,
-                      color: Colors.white54,
-                    ),
-                  );
-                },
+                  errorBuilder: (context, error) {
+                    return Container(
+                      width: double.infinity,
+                      color: AppColors.white20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Icon(
+                        Icons.movie,
+                        size: 50,
+                        color: Colors.white54,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

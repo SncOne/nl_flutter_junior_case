@@ -113,6 +113,8 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                                 '${context.t.name} ${context.t.surname}',
                                             controller: nameSurnameController,
                                             keyboardType: TextInputType.name,
+                                            textInputAction:
+                                                TextInputAction.next,
                                             prefixIcon: Image.asset(
                                               AppIcons.profile,
                                             ),
@@ -126,6 +128,8 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                             controller: emailController,
                                             keyboardType:
                                                 TextInputType.emailAddress,
+                                            textInputAction:
+                                                TextInputAction.next,
                                             prefixIcon: Image.asset(
                                               AppIcons.mail,
                                             ),
@@ -139,6 +143,10 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                             controller: passwordController,
                                             obscureText: true,
                                             showVisibilityToggle: true,
+                                            keyboardType:
+                                                TextInputType.visiblePassword,
+                                            textInputAction:
+                                                TextInputAction.next,
                                             prefixIcon: Image.asset(
                                               AppIcons.lock,
                                             ),
@@ -151,6 +159,10 @@ class RegisterView extends HookConsumerWidget with ValidatorsMixin {
                                             controller: repasswordController,
                                             obscureText: true,
                                             showVisibilityToggle: true,
+                                            keyboardType:
+                                                TextInputType.visiblePassword,
+                                            textInputAction:
+                                                TextInputAction.done,
                                             prefixIcon: Image.asset(
                                               AppIcons.lock,
                                             ),
